@@ -1,17 +1,27 @@
+import * as path from "path";
 import express from 'express';
 import httpErrors from 'http-errors';
-import rootRouter from './routes/roots';
+import dotenv from "dotenv";
+dotenv.config();
+
 import { timeMiddleware } from './middleware/time';
-import * as path from "path";
+
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 
+import * as config from "./config";
+import  * as routes from "./routes";
 
-
+import rootRouter from './routes/roots';
+import testRouter from './routes/test';
+import { formatRoleOptions } from "node-pg-migrate/dist/operations/roles";
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+config.liveReload(app);
+
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
@@ -22,8 +32,8 @@ app.use(express.static(path.join(process.cwd(),"public")));
 app.set('views', path.join(process.cwd(), 'src', 'server', 'views'));
 app.set('view engine', 'ejs');
 
-app.use('/', rootRouter);
-app.use('/test',rootRouter);
+app.use('/', routes.root);
+app.use('/test',routes.test);
 
 app.use((_request,_response,next) => {
   next(httpErrors(404));
