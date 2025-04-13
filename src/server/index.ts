@@ -21,6 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 config.liveReload(app);
+config.session(app);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
