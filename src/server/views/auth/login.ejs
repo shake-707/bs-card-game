@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BS | Login</title>
+  </head>
+  <body>
+    <form action="/auth/login" method="post">
+      <h1>Login</h1>
+
+      <% if (locals.error && error) { %>
+        <p style="color: red"><%= error %></p>
+      <% } %>
+
+      <div>
+        <label for="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          required
+          placeholder="Username"
+          <% if (locals.username && username) { %>
+            value="<%= username %>"
+          <% } %>
+        />
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required />
+      </div>
+
+      <button type="submit">Login</button>
+
+      <a href="/auth/register">Don't have an account? Register</a>
+    </form>
+  </body>
+</html>
