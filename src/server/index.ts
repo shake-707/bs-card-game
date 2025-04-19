@@ -10,7 +10,8 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 
 import * as config from "./config";
-import  * as routes from "./routes";
+import * as routes from "./routes";
+import * as middleware from "./middleware";
 
 import rootRouter from './routes/roots';
 import testRouter from './routes/test';
@@ -36,7 +37,7 @@ app.set('view engine', 'ejs');
 app.use('/', routes.root);
 app.use('/test',routes.test);
 app.use('/auth', routes.auth);
-app.use('/lobby', routes.lobby);
+app.use('/lobby', middleware.authMiddleware, routes.lobby);
 
 app.use((_request,_response,next) => {
   next(httpErrors(404));
