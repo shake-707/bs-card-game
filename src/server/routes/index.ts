@@ -12,3 +12,4 @@ export { default as messages } from './messages';
 export function handleMessages(arg0: string, authMiddleware: (request: Request, response: Response, next: NextFunction) => void, messages: any) {
   throw new Error('Function not implemented.');
 }
+export { default as chat } from "./chat";

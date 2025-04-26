@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>BS | Lobby</title>
     <link rel="stylesheet" href="/styles.css" />
+    <%- include('shared/head') %>
   </head>
   <body>
     <div class="header">
@@ -32,14 +33,28 @@
           alt="Gravatar"
           width="100"
           style="margin-top: 1rem;"
-        />
+        /> 
 
         <div style="margin-top: 2rem; text-align: center;">
           <button onclick="location.href='/auth/logout'" style="background-color: #777; max-width: 200px;">
             Logout
           </button>
-        </div>
+        </div> 
       </div>
+      <div id="content">
+        <section id="game-listing">
+          This is the game listing section TODO
+        </section>
+        <section id="chat-container">
+          <div id="messages"></div>
+          <form>
+            <input type="text" name="message" id="message-input">
+            <button type="submit" id="send-button">Send</button>
+          </form>
+        </section>
+        </div>
+      
     </main>
+    
   </body>
 </html>
