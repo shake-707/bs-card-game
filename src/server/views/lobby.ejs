@@ -3,18 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <title>BS | Lobby</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <%- include('shared/head') %>
   </head>
   <body>
-    <%- include('shared/menu') %>
+    <div class="header">
+      <div class="title">BS Card Game</div>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/how">How to Play</a>
+        <a href="/lobby">Lobby</a>
+        <a href="/auth/login">Login</a>
+        <a href="/auth/register">Register</a>
+      </div>
+    </div>
+
+    <main>
+      <div class="container">
+        <h1>Welcome <%= user.userName %></h1>
+
+        <ul style="text-align: left;">
+          <li><strong>ID:</strong> <%= user.id %></li>
+          <li><strong>Email:</strong> <%= user.email %></li>
+          <!--<li><strong>Gravatar Hash:</strong> <%= user.gravatar %></li>-->
+        </ul>
+
+        <img
+          src="https://www.gravatar.com/avatar/<%= user.gravatar %>"
+          alt="Gravatar"
+          width="100"
+          style="margin-top: 1rem;"
+        /> 
+
+        <div style="margin-top: 2rem; text-align: center;">
+          <button onclick="location.href='/auth/logout'" style="background-color: #777; max-width: 200px;">
+            Logout
+          </button>
+        </div> 
+      </div>
+      <div id="content">
+        <section id="game-listing">
+          This is the game listing section TODO
+        </section>
+        <section id="chat-container">
+          <div id="messages"></div>
+          <form>
+            <input type="text" name="message" id="message-input">
+            <button type="submit" id="send-button">Send</button>
+          </form>
+        </section>
+        </div>
+      
+    </main>
     
-    <h1>Welcome <%= user.userName %></h1> <!-- use userName, not email -->
-
-    <ul>
-      <li>id: <%= user.id %></li>
-      <li>email: <%= user.email %></li> <!-- optional -->
-      <li>gravatar: <%= user.gravatar %></li>
-    </ul>
-
-    <img src="https://www.gravatar.com/avatar/<%= user.gravatar %>" alt="Gravatar" width="100" />
   </body>
 </html>
