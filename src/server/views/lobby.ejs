@@ -42,14 +42,16 @@
           </button>
         </div> 
       </div>
-      <div id="content">
+      <div id="content" data-user-id="<%= user.id %>">
         <div style="margin: 2rem 0; text-align: center;">
           <button id="create-game-button">Create Game</button>
 
         </div>
 
         <section id="game-listing">
-          This is the game listing section TODO
+          <h2>Active Games</h2>
+          <ul id="games-list">
+          </ul>
         </section>
         <section id="chat-container">
           <div id="messages"></div>
@@ -61,6 +63,6 @@
         </div>
       
     </main>
-        <%- include("games/create-form") %>
+    <%- include("games/create-form") %>
   </body>
 </html>

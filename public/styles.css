@@ -233,3 +233,39 @@ section#chat-container {
 #close-create-game-form:hover {
   color: #e74c3c;
 }
+
+#games-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+#games-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#games-list li span {
+  flex: 1;
+}
+
+#games-list button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#games-list button:hover {
+  background-color: #357ab8;
+}
