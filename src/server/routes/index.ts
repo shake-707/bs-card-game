@@ -9,6 +9,7 @@ export { default as lobby } from "./lobby";
 export { default as messageRoutes } from "./messages";
 // other exports …
 export { default as messages } from './messages';   
+export { default as games } from "./games";
 export function handleMessages(arg0: string, authMiddleware: (request: Request, response: Response, next: NextFunction) => void, messages: any) {
   throw new Error('Function not implemented.');
 }

@@ -43,6 +43,7 @@ app.use('/test', routes.test);
 app.use('/auth', routes.auth);
 app.use('/messages', [middleware.authMiddleware, routes.messages]);   // NEW
 app.use('/lobby', middleware.authMiddleware, routes.lobby);
+app.use('/games', middleware.authMiddleware, routes.games);
 
 app.use((_req, _res, next) => next(httpErrors(404)));
 

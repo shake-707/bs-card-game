@@ -22,6 +22,9 @@
     },
     "games": {
       "source": "./src/client/games/index.ts"
+    },
+    "lobby": {
+      "source": "./src/client/lobby/index.ts"
     }
   },
   "keywords": [],
