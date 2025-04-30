@@ -1,15 +1,25 @@
 import db from "../connection";
 
-const CREATE_SQL = `
-   INSERT INTO games (host_id, player_count)
-   VALUES ($1, $2)
-   RETURNING id
- `;
-const ADD_PLAYER = `INSERT INTO game_users (game_id, user_id) VALUES ($1, $2)`;
+const CREATE_GAME_SQL = `
+  INSERT INTO games (host_id, player_count)
+  VALUES ($1, $2)
+  RETURNING id
+`;
+
+const ADD_PLAYER_SQL = `
+  INSERT INTO game_users (
+    game_id,
+    user_id,
+    turn_order,
+    cards_placed_down
+  ) VALUES (
+    $1, $2, 1, 0
+  )
+`;
 
 const create = async (hostId: number, playerCount: number) => {
-  const { id: gameId } = await db.one(CREATE_SQL, [hostId, playerCount]);
-  await db.none(ADD_PLAYER, [gameId, hostId]);
+  const { id: gameId } = await db.one(CREATE_GAME_SQL, [hostId, playerCount]);
+  await db.none(ADD_PLAYER_SQL, [gameId, hostId]);
   return gameId;
 };
 

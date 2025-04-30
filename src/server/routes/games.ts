@@ -26,7 +26,8 @@ router.get("/active", async (_req, res) => {
        Number(maxPlayers)
      );
 
-        response.redirect(`/games/${gameId}`);
+     // response.redirect(`/games/${gameId}`);
+     response.redirect("/lobby"); //TEMP
     } catch (error) {
         console.log(error);
 
