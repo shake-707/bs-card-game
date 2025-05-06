@@ -6,15 +6,7 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="header">
-      <div class="title">BS Card Game</div>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/how">How to Play</a>
-        <a href="/auth/login">Login</a>
-        <a href="/auth/register">Register</a>
-      </div>
-    </div>
+    <%- include('../shared/menu', { user: null }) %>
 
     <main>
       <div class="container">
