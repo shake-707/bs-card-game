@@ -8,14 +8,63 @@
         <script src="/js/games/index.js" defer></script>
     </head>
     <body>
-        <p>in game page</p>
-        <section id="chat-container">
+        <%- include('shared/menu', { user }) %>
+        <main>
+        <div id="game-chat-wrapper">
+            <!-- Game Container -->
+            <div id="game-container">
+              <!-- Top opponent -->
+              <div class="top-opponent">
+                <div class="opponent-card"></div>
+                <div class="opponent-info top-info"># of cards:</div>
+              </div>
+          
+              <!-- Left opponent -->
+              <div class="side-opponent left">
+                <div class="opponent-card"></div>
+                <div class="opponent-info"># of cards:</div>
+              </div>
+          
+              <!-- Right opponent -->
+              <div class="side-opponent right">
+                <div class="opponent-card"></div>
+                <div class="opponent-info"># of cards:</div>
+              </div>
+
+              <!-- Card pile in center -->
+            <div id="card-pile">
+                <div class="card">?</div>
+                <div class="opponent-info"># cards in pile:</div>
+            </div>
+            
+          
+              <!-- Player's cards -->
+              <div id="user-cards">
+                <div class="player-name"><%= user.userName %></div>
+                <div class="card">A</div>
+              </div>
+            </div>
+          
+            <!-- Chat container (existing) -->
+            <section id="chat-container">
+              <div id="messages"></div>
+              <form>
+                <input type="text" name="message" id="message-input">
+                <button type="submit" id="send-button">Send</button>
+              </form>
+            </section>
+          </div>
+          
+        <!--<section id="chat-container">
             <div id="messages"></div>
             <form>
               <input type="text" name="message" id="message-input">
               <button type="submit" id="send-button">Send</button>
             </form>
           </section>
+        -->
           <input type="hidden" name="game-id" id="game-id" value="<%= gameId %>" />
+
+        </main>
     </body>
 </html>
