@@ -3,7 +3,7 @@ import { ChatMessage } from "../../../types/global";
 
 import { socket } from "../sockets";
 
-
+import { cloneTemplate, getGameId } from "../utils";
 
 
     const chatContainer = document.querySelector<HTMLDivElement>("#chat-container div#messages");
@@ -12,9 +12,9 @@ import { socket } from "../sockets";
 
     
 
-    socket?.on("chat: message: 0", ({ message, sender, timestamp }: ChatMessage) => {
-        console.log("📥 Received chat message:", { message, sender, timestamp });
-
+    socket?.on(`chat:message:${getGameId()}`, ({ message, sender, timestamp }: ChatMessage) => {
+        console.log("Received chat message:", { message, sender, timestamp });
+        console.log("game id: " + getGameId());
         const messageContainer = document.createElement("div");
         messageContainer.classList.add("message");
         const text = document.createElement("p");
@@ -49,7 +49,7 @@ import { socket } from "../sockets";
 
         chatInput!.value = "";
 
-        fetch("/chat/0", {
+        fetch(`/chat/${getGameId()}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

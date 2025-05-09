@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>game page</title>
+        
+        <link rel="stylesheet" href="/styles.css" />
+        <%- include('shared/head') %>
+        <script src="/js/games/index.js" defer></script>
+    </head>
+    <body>
+        <p>in game page</p>
+        <section id="chat-container">
+            <div id="messages"></div>
+            <form>
+              <input type="text" name="message" id="message-input">
+              <button type="submit" id="send-button">Send</button>
+            </form>
+          </section>
+          <input type="hidden" name="game-id" id="game-id" value="<%= gameId %>" />
+    </body>
+</html>
