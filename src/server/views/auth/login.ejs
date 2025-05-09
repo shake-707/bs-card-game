@@ -3,37 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <title>BS | Login</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <form action="/auth/login" method="post">
-      <h1>Login</h1>
+    <%- include('../shared/menu', { user: null }) %>
 
-      <% if (locals.error && error) { %>
-        <p style="color: red"><%= error %></p>
-      <% } %>
+    <main>
+      <div class="container">
+        <form action="/auth/login" method="post">
+          <h1>Login</h1>
 
-      <div>
-        <label for="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          required
-          placeholder="Username"
-          <% if (locals.username && username) { %>
-            value="<%= username %>"
+          <% if (locals.error && error) { %>
+            <p style="color: red"><%= error %></p>
           <% } %>
-        />
+
+          <div>
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              placeholder="Username"
+              <% if (locals.username && username) { %>
+                value="<%= username %>"
+              <% } %>
+            />
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+          </div>
+
+          <button type="submit">Login</button>
+
+          <p>
+            <a href="/auth/register">Don't have an account? Register</a>
+          </p>
+        </form>
       </div>
-
-      <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required />
-      </div>
-
-      <button type="submit">Login</button>
-
-      <a href="/auth/register">Don't have an account? Register</a>
-    </form>
+    </main>
   </body>
 </html>
