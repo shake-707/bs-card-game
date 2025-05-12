@@ -1,6 +1,15 @@
-<menu>
-    <ul class="menu">
-        <li><a href="/lobby">Lobby</a></li>
-        <li><a href="/auth/logout">Logout</a></li>
-    </ul>
-</menu>
+<div class="header">
+    <div class="title">BS Card Game</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/lobby">Lobby</a>
+  
+      <% if (!user) { %>
+        <a href="/auth/login">Login</a>
+        <a href="/auth/register">Register</a>
+      <% } else { %>
+        <a href="/auth/logout">Logout</a>
+      <% } %>
+    </div>
+  </div>
+  

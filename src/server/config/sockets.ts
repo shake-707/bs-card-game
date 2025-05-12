@@ -26,9 +26,9 @@ const configureSockets = (io: Server, app: Express,sessionMiddleWare: RequestHan
         const user = session?.user;
     
         if (user) {
-            console.log(`🔌 User [${user.id}] connected: ${user.email}`);
+            console.log(` User [${user.id}] connected: ${user.email}`);
         } else {
-            console.log('🔌 Anonymous user connected.');
+            console.log(' Anonymous user connected.');
         }
     
         socket.on('disconnect', () => {
@@ -37,9 +37,9 @@ const configureSockets = (io: Server, app: Express,sessionMiddleWare: RequestHan
             const user = session?.user;
     
             if (user) {
-                console.log(`❌ User [${user.id}] disconnected: ${user.email}`);
+                console.log(`User [${user.id}] disconnected: ${user.email}`);
             } else {
-                console.log('❌ Anonymous user disconnected.');
+                console.log('Anonymous user disconnected.');
             }
         });
     });

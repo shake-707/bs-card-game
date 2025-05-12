@@ -1,0 +1,11 @@
+@import url("/css/includes/games.css");
+
+body {
+    font-size: var(--font-size);
+}
+
+.gravatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}

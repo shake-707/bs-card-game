@@ -8,16 +8,7 @@
     <script src="/js/lobby/index.js" defer></script>
   </head>
   <body>
-    <div class="header">
-      <div class="title">BS Card Game</div>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/how">How to Play</a>
-        <a href="/lobby">Lobby</a>
-        <a href="/auth/login">Login</a>
-        <a href="/auth/register">Register</a>
-      </div>
-    </div>
+    <%- include('shared/menu', { user }) %>
 
     <main>
       <div class="container">
@@ -61,6 +52,7 @@
           </form>
         </section>
         </div>
+        <input type="hidden" id="game-id" value="0">
       
     </main>
     <%- include("games/create-form") %>

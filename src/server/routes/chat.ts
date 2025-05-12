@@ -25,7 +25,7 @@ router.post('/:roomId', (request: Request, response: Response) => {
         return;
     }
 
-    io.emit(`chat: message: ${roomId}`, {
+    io.emit(`chat:message:${roomId}`, {
         message,
         sender: {
             id,
