@@ -14,7 +14,6 @@ export const ADD_PLAYER_SQL = `
   )
 `;
 
-
 const create = async (hostId: number, playerCount: number) => {
   const { id: gameId } = await db.one(CREATE_GAME_SQL, [hostId, playerCount]);
   await db.none(ADD_PLAYER_SQL, [gameId, hostId]);
@@ -32,7 +31,6 @@ const GET_ACTIVE_SQL = `
     ON u.id = g.host_id
   ORDER BY g.created_at DESC
 `;
-
 
 export const getActive = async () => {
   return db.any(GET_ACTIVE_SQL);

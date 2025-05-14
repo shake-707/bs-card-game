@@ -157,3 +157,115 @@ section#chat-container {
   border: 1px solid #ccc;
   background-color: #ccc;
 }
+#create-game-container {
+  display: none;
+}
+
+#create-game-container.visible {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#create-game-container .modal {
+  position: relative;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 400px;
+}
+
+#create-game-container .modal form > div {
+  margin-bottom: 1rem;
+}
+
+#create-game-container .modal form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+#create-game-container .modal form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#create-game-container .modal form button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+#create-game-container .modal form button:hover {
+  background: #357ab8;
+}
+
+#close-create-game-form {
+  width: 2rem;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0.2rem;
+  right: 0.1rem;
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1001;
+}
+#close-create-game-form:hover {
+  color: #e74c3c;
+}
+
+#games-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+#games-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#games-list li span {
+  flex: 1;
+}
+
+#games-list button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#games-list button:hover {
+  background-color: #357ab8;
+}

@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 
 import { Game } from '../db';
 import { ADD_PLAYER_SQL } from '../db/games';
-
 import db from "../db/connection";
 
 const router = express.Router();
@@ -18,24 +17,18 @@ router.get("/active", async (_req, res) => {
   }
 });
 
- router.post("/create", async (request: Request, response: Response) => {
-   // @ts-ignore
-   const { id: userId } = request.session.user;
-   const { maxPlayers } = request.body;
+router.post("/create", async (request: Request, response: Response) => {
+  // @ts-ignore
+  const { id: userId } = request.session.user;
+  const { maxPlayers } = request.body;
 
-   try {
-     const gameId = await Game.create(
-       userId,
-       Number(maxPlayers)
-     );
-
-     // response.redirect(`/games/${gameId}`);
-     response.redirect("/lobby"); //TEMP
-    } catch (error) {
-        console.log(error);
-
-        response.redirect("/lobby");
-    }
+  try {
+    const gameId = await Game.create(userId, Number(maxPlayers));
+    response.redirect("/lobby"); // TEMP
+  } catch (error) {
+    console.log(error);
+    response.redirect("/lobby");
+  }
 });
 
 router.get('/:gameId', async (req, res) => {
@@ -52,13 +45,11 @@ router.get('/:gameId', async (req, res) => {
       playerCount: player_count,
     });
   } catch (err) {
-    console.error("couldnt get player count", err);
+    console.error("couldn't get player count", err);
     res.status(500).send("Error loading players");
   }
 });
 
-
-// server/routes/games.ts
 router.post("/join", async (req, res) => {
   const { gameId, userId } = req.body;
 
@@ -70,6 +61,5 @@ router.post("/join", async (req, res) => {
     res.status(500).json({ error: "Could not join game" });
   }
 });
-
 
 export default router;

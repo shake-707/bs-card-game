@@ -110,7 +110,7 @@
     text-align: center;
   }
   
-  #user-cards .player-name {
+   #user-cards .player-name {
     color: white;
     font-weight: bold;
     margin-bottom: 0.25rem;
@@ -119,5 +119,5 @@
   #player-count {
     position: absolute;
     top: 0;
-    left: 0
+    left: 0;
   }
