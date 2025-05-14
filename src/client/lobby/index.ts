@@ -2,7 +2,6 @@ const createGameButton = document.querySelector("#create-game-button");
 const createGameContainer = document.querySelector("#create-game-container");
 const closeButton = document.querySelector("#close-create-game-form");
 
-
 const contentDiv = document.getElementById("content");
 const userId = Number(contentDiv?.dataset.userId);
 
@@ -38,7 +37,15 @@ async function loadGames() {
         joinBtn.innerText = "Join";
         joinBtn.style.marginLeft = "8px";
         joinBtn.addEventListener("click", () => {
-          location.href = `/games/${game.id}`;
+          fetch("/games/join", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ gameId: game.id, userId }),
+          }).then(() => {
+            location.href = `/games/${game.id}`;
+          });
         });
         li.appendChild(joinBtn);
       }
@@ -58,9 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
     createGameContainer?.classList.add("visible");
   });
 
-closeButton?.addEventListener("click", (event) => {
+  closeButton?.addEventListener("click", (event) => {
     event.preventDefault();
-
     createGameContainer?.classList.remove("visible");
   });
 });
