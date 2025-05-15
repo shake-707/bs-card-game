@@ -1,28 +1,21 @@
 import express from 'express';
-import {Request, Response} from 'express';
-
+import { Request, Response } from 'express';
 
 const myFunction = () => {
-    console.log('Hello from myFunction!');
-}
+  console.log('Hello from myFunction!');
+};
 
 myFunction.myName = 'John';
 
-
 const router = express.Router();
 
-router.get('/', (_request: Request, response: Response) => {
-    const title = 'BS - Site'
-    const name = 'John';
+router.get('/', (request: Request, response: Response) => {
+  const title = 'BS - Site';
+  const name = 'John';
+  // @ts-ignore 
+  const user = request.session.user || null;
 
-    // {title , name} same as
-
-    // const obj = {
-    //     title: title,
-    //     name: name
-    // }
-    
-    response.render('root', {title, name});
+  response.render('root', { title, name, user });
 });
 
 export default router;
