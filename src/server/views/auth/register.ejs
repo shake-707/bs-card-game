@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BS | Register</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../shared/menu', { user: null }) %>
+
+    <main>
+      <div class="container">
+        <form action="/auth/register" method="post">
+          <h1>Register</h1>
+
+          <% if (locals.error && error) { %>
+            <p style="color: red"><%= error %></p>
+          <% } %>
+
+          <div>
+            <label for="first_name">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              id="first_name"
+              required
+              placeholder="First name"
+              <% if (locals.firstName && firstName) { %>
+                value="<%= firstName %>"
+              <% } %>
+            />
+          </div>
+
+          <div>
+            <label for="last_name">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              id="last_name"
+              required
+              placeholder="Last name"
+              <% if (locals.lastName && lastName) { %>
+                value="<%= lastName %>"
+              <% } %>
+            />
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              placeholder="Email address"
+              <% if (locals.email && email) { %>
+                value="<%= email %>"
+              <% } %>
+            />
+          </div>
+
+          <div>
+            <label for="username">Username</label>
+            <input
+              type="text"
+              name="userName"
+              id="username"
+              required
+              placeholder="Username"
+              <% if (locals.userName && userName) { %>
+                value="<%= userName %>"
+              <% } %>
+            />
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+          </div>
+
+          <button type="submit">Register</button>
+
+          <p>
+            <a href="/auth/login">Already have an account? Login</a>
+          </p>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
