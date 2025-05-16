@@ -11,10 +11,15 @@ startGameButton?.addEventListener("click", async (event) => {
   });
 
   if (!response.ok) {
-    const data = await response.json();
-    alert(data.error || "Failed to start game");
+    try {
+      const data = await response.json();
+      alert(data.error || "Failed to start game");
+    } catch {
+      alert("Failed to start game");
+    }
     return;
   }
+
 
   alert("Game started!");
 });
@@ -26,7 +31,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!data.started) {
     const gameContainer = document.getElementById("game-container");
     if (gameContainer) {
-      gameContainer.innerHTML = '<div style="color:red;font-size:1.5rem;text-align:center;">Waiting for host to start the game...</div>';
+      gameContainer.innerHTML = `
+        <div style="color:red;font-size:1.5rem;text-align:center;">
+          Waiting for host to start the game...
+        </div>
+      `;
     }
     // Optionally hide other controls
   }

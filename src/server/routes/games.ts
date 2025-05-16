@@ -2,10 +2,12 @@ import express from 'express';
 import { Request, Response } from 'express';
 
 import { Game } from '../db';
+import { ADD_PLAYER_SQL } from '../db/games/index';
 import db from '../db/connection';
 
 const router = express.Router();
 
+// Get list of active games
 router.get("/active", async (_req, res) => {
   try {
     const games = await Game.getActive();
@@ -16,40 +18,52 @@ router.get("/active", async (_req, res) => {
   }
 });
 
- router.post("/create", async (request: Request, response: Response) => {
-   // @ts-ignore
-   const { id: userId } = request.session.user;
-   const { maxPlayers } = request.body;
+// Create a new game
+router.post("/create", async (request: Request, response: Response) => {
+  // @ts-ignore
+  const { id: userId } = request.session.user;
+  const { maxPlayers } = request.body;
 
-   try {
-     const gameId = await Game.create(
-       userId,
-       Number(maxPlayers)
-     );
-
-     // response.redirect(`/games/${gameId}`);
-     response.redirect("/lobby"); //TEMP
-    } catch (error) {
-        console.log(error);
-
-        response.redirect("/lobby");
-    }
+  try {
+    const gameId = await Game.create(userId, Number(maxPlayers));
+    response.redirect("/lobby"); // TEMP
+  } catch (error) {
+    console.log(error);
+    response.redirect("/lobby");
+  }
 });
 
-router.get('/:gameId', (request: Request, response: Response) => {
-    const { gameId } = request.params;
-    // @ts-ignore
-    const user = request.session.user;
-    db.oneOrNone('SELECT * FROM games WHERE id = $1', [gameId])
-      .then(game => {
-        const hostId = game ? game.host_id : null;
-        response.render("games", { gameId, user, hostId });
-      })
-      .catch(() => {
-        response.render("games", { gameId, user, hostId: null });
-      });
+// Join a game
+router.post("/join", async (req, res) => {
+  const { gameId, userId } = req.body;
+
+  try {
+    await db.none(ADD_PLAYER_SQL, [gameId, userId]);
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Join game failed:", err);
+    res.status(500).json({ error: "Could not join game" });
+  }
 });
 
+// Load game page
+router.get('/:gameId', async (req, res) => {
+  const { gameId } = req.params;
+  // @ts-ignore
+  const user = req.session.user;
+
+  try {
+    const game = await db.oneOrNone('SELECT * FROM games WHERE id = $1', [gameId]);
+    const hostId = game ? game.host_id : null;
+
+    res.render("games", { gameId, user, hostId });
+  } catch (err) {
+    console.error("Error loading game", err);
+    res.render("games", { gameId, user, hostId: null });
+  }
+});
+
+// Start game
 router.post('/:gameId/start', (request: Request, response: Response) => {
   const { gameId } = request.params;
   // @ts-ignore
@@ -77,6 +91,7 @@ router.post('/:gameId/start', (request: Request, response: Response) => {
     });
 });
 
+// Handle play card request (stub)
 router.post('/:gameId/play', (request: Request, response: Response) => {
   const { gameId } = request.params;
   // @ts-ignore
@@ -88,7 +103,6 @@ router.post('/:gameId/play', (request: Request, response: Response) => {
         return response.status(400).json({ error: 'Game has not started yet.' });
       }
       // TODO: Add your play card logic here
-      // Example: const { cardId } = request.body;
       return response.json({ success: true, message: 'Card played (stub)' });
     })
     .catch(() => {
@@ -96,6 +110,7 @@ router.post('/:gameId/play', (request: Request, response: Response) => {
     });
 });
 
+// Check game status
 router.get('/:gameId/status', (request: Request, response: Response) => {
   const { gameId } = request.params;
   db.oneOrNone('SELECT started FROM games WHERE id = $1', [gameId])

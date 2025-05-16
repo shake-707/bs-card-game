@@ -6,14 +6,11 @@ const CREATE_GAME_SQL = `
   RETURNING id
 `;
 
-const ADD_PLAYER_SQL = `
-  INSERT INTO game_users (
-    game_id,
-    user_id,
-    turn_order,
-    cards_placed_down
-  ) VALUES (
-    $1, $2, 1, 0
+export const ADD_PLAYER_SQL = `
+  INSERT INTO game_users (game_id, user_id, turn_order, cards_placed_down)
+  SELECT $1, $2, 1, 0
+  WHERE NOT EXISTS (
+    SELECT 1 FROM game_users WHERE game_id = $1 AND user_id = $2
   )
 `;
 
@@ -35,20 +32,26 @@ const GET_ACTIVE_SQL = `
   ORDER BY g.created_at DESC
 `;
 
-
 export const getActive = async () => {
   return db.any(GET_ACTIVE_SQL);
 };
 
 const getPlayerCount = async (gameId: number) => {
-  const result = await db.oneOrNone('SELECT COUNT(*) AS count FROM game_users WHERE game_id = $1', [gameId]);
+  const result = await db.oneOrNone(
+    'SELECT COUNT(*) AS count FROM game_users WHERE game_id = $1',
+    [gameId]
+  );
   return result ? parseInt(result.count, 10) : 0;
 };
 
 const startGame = async (gameId: number) => {
-  // Update the 'started' field in the games table
   await db.none('UPDATE games SET started = TRUE WHERE id = $1', [gameId]);
   return true;
 };
 
-export default { create, getActive, getPlayerCount, startGame };
+export default {
+  create,
+  getActive,
+  getPlayerCount,
+  startGame
+};
