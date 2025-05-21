@@ -1,6 +1,6 @@
-import UI from "../elements";
-import { configureSocketEvents } from "./configure-socket-events";
-import { getGameId } from "../utils";
+import UI from "./elements";
+import { configureSocketEvents } from "./games/configure-socket-events";
+import { getGameId } from "./utils";
 console.log('in this page');
 // Set up socket listeners for game state updates
 configureSocketEvents();

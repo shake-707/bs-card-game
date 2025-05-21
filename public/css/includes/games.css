@@ -115,3 +115,10 @@
     top: 0;
     left: 0;
 }
+
+
+#game-waiting-overlay {
+    position: absolute;
+    width: 20vw;
+    top: -50px;
+}
