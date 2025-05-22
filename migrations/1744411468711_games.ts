@@ -1,7 +1,5 @@
 import { ColumnDefinitions, MigrationBuilder } from 'node-pg-migrate';
 
-
-
 export async function up(pgm: MigrationBuilder): Promise<void> {
     pgm.createTable('games', {
         id: 'id',
@@ -17,14 +15,18 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         created_at: {
             type: "timestamp",
             notNull: true,
-            default: pgm.func('now()'), // postgres func for curr timestamp
+            default: pgm.func('now()'),
         },
         game_end: {
             type: "timestamp",
             notNull: true,
-            default: pgm.func('now()'), // postgres func for curr timestamp
+            default: pgm.func('now()'),
         },
-
+        started: {
+            type: 'boolean',
+            notNull: true,
+            default: false,
+        },
     });
 }
 
