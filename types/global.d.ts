@@ -1,7 +1,7 @@
 import "express-session";
 
 export type User = {
-    id: string;
+    id: number;
     email: string;
     gravatar: string;
     user_name: string;
@@ -20,14 +20,27 @@ export type Card = {
 };
 
 export type Player = {
-  id: string;
-  user_name: string;
+  id: number;
+  user_id: number;
   seat: number;
   isCurrent: boolean;
 };
 
-export type PlayerInfo = Player & {
+export type PlayerInfo = {
+  id: number;
+  user_id: number;
+  seat: number;
+  isCurrent: boolean;
   hand: Card[];
+  handCount: number;
+};
+
+export type OtherPlayerInfo = {
+  id: number;
+  user_id: number;
+  seat: number;
+  handCount: number;
+  isCurrent: boolean;
 };
 
 export type GameInfo = {
@@ -53,8 +66,16 @@ export type PlayerGameState = {
   currentValueIndex: number;
 };
 
-declare module "express-session" {
-  interface SessionData {
-    user: User;
-  }
-}
+export type DbGameUser = {
+  game_id: number;
+  user_id: number;
+  turn_order: number;
+  cards_placed_down: number;
+  game_user_won: boolean;
+  is_current: boolean;
+};
+
+export type GetGameInfoResponse = {
+  player_count: number;
+  has_started: boolean;
+};

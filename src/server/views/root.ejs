@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <title>BS Card Game</title>
     <link rel="stylesheet" href="/styles.css" />
+    <script src="/js/chat/index.js"></script>
   </head>
+
   <body>
     <%- include('shared/menu', { user }) %>
 
@@ -32,6 +34,16 @@
             <li>If the cards are not what was claimed, the liar picks up the pile. If they were honest, the challenger picks it up.</li>
             <li>The goal is to be the first to get rid of all your cards.</li>
           </ol>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Debug/Test Info</h3>
+          <p>Welcome to the site <%= name %></p>
+          <ul>
+            <% for(let i = 0; i < 10; i++) { %>
+              <li>Item <%= i %></li>
+            <% } %>
+          </ul>
         </div>
       </div>
     </main>

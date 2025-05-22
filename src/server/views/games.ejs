@@ -1,52 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>game page</title>
+    <title>BS Card Game</title>
     <link rel="stylesheet" href="/styles.css" />
     <%- include('shared/head') %>
     <script src="/js/games/index.js" defer></script>
   </head>
 
   <body>
-    <nav><%- include('shared/menu', { user }) %></nav>
+    <%- include('shared/menu', { user }) %>
 
     <main>
       <div id="game-chat-wrapper">
-        <!-- Game Container -->
-        <div id="game-container">
-          <div id="player-count">
-            <h3>Players in this game: <%= playerCount %></h3>
+        <!-- Game area -->
+        <div id="game-container" class="<%= started ? 'started' : '' %>">
+          <div id="game-waiting-overlay">
+            <% if (isHost && !started) { %>
+              <button id="start-game-button" class="shown">Start Game</button>
+            <% } else if (!started) { %>
+              <strong>Waiting for host...</strong>
+              <p>Players in Game: <%= playerCount -1 %></p>
+            <% } %>
           </div>
 
-          <!-- Top opponent -->
-          <div class="top-opponent">
-            <div class="opponent-card"></div>
-            <div class="opponent-info top-info"># of cards:</div>
-          </div>
-
-          <!-- Left opponent -->
-          <div class="side-opponent left">
-            <div class="opponent-card"></div>
-            <div class="opponent-info"># of cards:</div>
-          </div>
-
-          <!-- Right opponent -->
-          <div class="side-opponent right">
-            <div class="opponent-card"></div>
-            <div class="opponent-info"># of cards:</div>
-          </div>
-
-          <!-- Card pile in center -->
-          <div id="card-pile">
-            <div class="card">?</div>
-            <div class="opponent-info"># cards in pile:</div>
-          </div>
-
-          <!-- Player's cards -->
-          <div id="user-cards">
-            <div class="player-name"><%= user.userName %></div>
-            <div class="card">A</div>
-          </div>
+          <!-- Game screen dynamically populated via JS -->
         </div>
 
         <!-- Chat container -->
@@ -60,6 +37,36 @@
       </div>
 
       <input type="hidden" name="game-id" id="game-id" value="<%= gameId %>" />
+
+      <!-- Card + Player templates -->
+      <template id="faceDown-card-template">
+        <div class="card back">?</div>
+      </template>
+
+      <template id="card-template">
+        <div class="card" data-card-id="">
+          <span class="card-value"></span>
+          <span class="card-suit"></span>
+        </div>
+      </template>
+
+      <template id="player-template">
+        <div class="player">
+          <div class="player-name"></div>
+          <div class="hand"></div>
+          <div class="middle-pile-btn">Place Card</div>
+        </div>
+      </template>
+
+      <template id="opponent-template">
+        <div class="player">
+          <div class="hand"></div>
+          <div class="hand-count"></div>
+        </div>
+      </template>
     </main>
   </body>
+  <script>
+  window.USER_ID = "<%= user.id %>";
+</script>
 </html>
