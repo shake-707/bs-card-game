@@ -1,7 +1,23 @@
 import { Card } from "global";
 import { cloneTemplate } from "../utils";
 
-const cardLabels = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+const cardLabels: Record<number, string> = {
+  1: "A",
+  2: "2",
+  3: "3",
+  4: "4",
+  5: "5",
+  6: "6",
+  7: "7",
+  8: "8",
+  9: "9",
+  10: "10",
+  11: "J",
+  12: "Q",
+  13: "K",
+};
+
+
 const suitSymbols: Record<Card["suit"], string> = {
   hearts: "♥",
   diamonds: "♦",
@@ -59,40 +75,3 @@ export const createCard = (card?: Card) => {
 };
 
 
-// const createFaceCard = (card: Card) => {
-//     const div = cloneTemplate("#face-card-template");
-
-//     div.querySelector<HTMLDivElement>(".card")!.dataset.cardId = `${card.id}`;
-
-//     return div;
-// };
-
-// const createNumberCard = (card: Card) => {
-//     const div = cloneTemplate("#number-card-template");
-
-//     div.querySelector<HTMLDivElement>(".card")!.dataset.cardId = `${card.id}`;
-//     div.querySelector<HTMLDivElement>(".card")!.dataset.number = `${card.value}`;
-
-//     div.querySelector<HTMLDivElement>(".card-number")!.innerText = `${card.value}`;
-
-//     return div
-
-// };
-
-// const createFaceDownCard = () => {
-//     const div = cloneTemplate("#faceDown-card-template");
-
-//     div.querySelector<HTMLDivElement>(".card")!.classList.add("blank");
-
-//     return div;
-// };
-
-// export const createCard = (card?:Card) => {
-//     if (!card) {
-//         return createFaceDownCard();
-//     } else if (card.value == 0) {
-//         return createFaceCard(card);
-//     } else {
-//         return createNumberCard(card);
-//     }
-// };
