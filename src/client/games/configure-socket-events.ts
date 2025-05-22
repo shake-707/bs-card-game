@@ -8,8 +8,9 @@ import { currentPlayer, otherPlayer } from "./create-players";
 
 export const configureSocketEvents = () => {
   
-
+  
   const gameId = getGameId();
+  console.log(gameId);
   console.log('in sockets');
   socket.on(`game:${gameId}:updated`, (gameState: PlayerGameState) => {
     console.log(" Game updated:", gameState);

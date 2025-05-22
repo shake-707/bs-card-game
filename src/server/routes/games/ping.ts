@@ -6,7 +6,7 @@ export const ping = async (request: Request, response: Response) => {
     // @ts-ignore
     const { id: userId } = request.session.user!;
     const gameId = Number(request.params.gameId);
-
+    console.log("Id broadcasting to player " + userId);
     await broadcastGameStateToPlayer(gameId, `${userId}`, request.app.get("io"));
 
     return response.status(200).send("Pinged and state sent");

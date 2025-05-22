@@ -92,7 +92,7 @@ export const broadcastGameStateToPlayer = async (
   const gameState = await Game.getState(gameId);
   const playerInfo = gameState.players[playerId];
   if (!playerInfo) return;
-
+  console.log("playerId" + playerId);
   io.to(playerId).emit(
     `game:${gameId}:updated`,
     createPlayerState(gameState, playerInfo)
@@ -101,8 +101,9 @@ export const broadcastGameStateToPlayer = async (
 
 export const broadcastGameState = async (gameId: number, io: Server) => {
   const gameState = await Game.getState(gameId);
-
+  
   Object.entries(gameState.players).forEach(([playerId, playerInfo]) => {
+    console.log('player info:' + playerId);
     io.to(playerId).emit(
       `game:${gameId}:updated`,
       createPlayerState(gameState, playerInfo)

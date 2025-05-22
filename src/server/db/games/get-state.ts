@@ -21,22 +21,23 @@ export const getState = async (gameId: number): Promise<GameState> => {
   const playerInfo: Record<string, PlayerInfo> = {};
 
   for (const player of players) {
-    const { id, user_id, turn_order, is_current: isCurrent } = player;
+    const { id: gameUserId, user_id, turn_order, is_current: isCurrent } = player;
 
     const hand = await db.any(GET_CARD_SQL, {
       gameId,
-      userId: id,
+      userId: gameUserId,
       pile: PLAYER_HAND,
     });
 
-    playerInfo[id] = {
-      id,
-      user_id,
+    playerInfo[user_id] = {
+      id: gameUserId,           // game_users.id
+      user_id,      // users.id (real user ID)
       seat: turn_order,
       isCurrent,
       hand,
-      handCount: hand.length
+      handCount: hand.length,
     };
+
   }
 
   const middlePile = await db.any(GET_CARD_SQL, {

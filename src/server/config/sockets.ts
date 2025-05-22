@@ -27,6 +27,7 @@ const configureSockets = (io: Server, app: Express,sessionMiddleWare: RequestHan
     
         if (user) {
             console.log(` User [${user.id}] connected: ${user.email}`);
+            socket.join(`${user.id}`);
         } else {
             console.log(' Anonymous user connected.');
         }
