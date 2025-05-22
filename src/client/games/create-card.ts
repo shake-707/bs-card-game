@@ -51,7 +51,7 @@ const createFaceDownCard = () => {
 export const createCard = (card?: Card) => {
   if (!card) {
     return createFaceDownCard();
-  } else if (card.value === 0 || card.value >= 10) {
+  } else if (card.value === 1 || card.value >= 11) {
     return createFaceCard(card);
   } else {
     return createNumberCard(card);

@@ -1,72 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>BS Card Game</title>
-    <link rel="stylesheet" href="/styles.css" />
-    <%- include('shared/head') %>
-    <script src="/js/games/index.js" defer></script>
-  </head>
+<head>
+  <title>BS Card Game</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <%- include('shared/head') %>
+  <script src="/js/games/index.js" defer></script>
+</head>
 
-  <body>
-    <%- include('shared/menu', { user }) %>
+<body>
+  <%- include('shared/menu', { user }) %>
 
-    <main>
-      <div id="game-chat-wrapper">
-        <!-- Game area -->
-        <div id="game-container" class="<%= started ? 'started' : '' %>">
-          <div id="game-waiting-overlay">
-            <% if (isHost && !started) { %>
-              <button id="start-game-button" class="shown">Start Game</button>
-            <% } else if (!started) { %>
-              <strong>Waiting for host...</strong>
-              <p>Players in Game: <%= playerCount -1 %></p>
-            <% } %>
-          </div>
-
-          <!-- Game screen dynamically populated via JS -->
+  <main>
+    <div id="game-chat-wrapper">
+      <!-- Game area -->
+      <div id="game-container" class="<%= started ? 'started' : '' %>">
+        <div id="game-waiting-overlay">
+          <% if (isHost && !started) { %>
+            <button id="start-game-button" class="shown">Start Game</button>
+          <% } else if (!started) { %>
+            <strong>Waiting for host...</strong>
+            <p>Players in Game: <%= playerCount - 1 %></p>
+          <% } %>
         </div>
 
-        <!-- Chat container -->
-        <section id="chat-container">
-          <div id="messages"></div>
-          <form>
-            <input type="text" name="message" id="message-input" />
-            <button type="submit" id="send-button">Send</button>
-          </form>
-        </section>
+        <!-- Game screen will be dynamically updated via JS -->
+        <div id="play-area"></div>
       </div>
 
-      <input type="hidden" name="game-id" id="game-id" value="<%= gameId %>" />
+      <!-- Chat container -->
+      <section id="chat-container">
+        <div id="messages"></div>
+        <form>
+          <input type="text" name="message" id="message-input" />
+          <button type="submit" id="send-button">Send</button>
+        </form>
+      </section>
+    </div>
 
-      <!-- Card + Player templates -->
-      <template id="faceDown-card-template">
-        <div class="card back">?</div>
-      </template>
+    <!-- Hidden Game Metadata -->
+    <input type="hidden" name="game-id" id="game-id" value="<%= gameId %>" />
+  </main>
 
-      <template id="card-template">
-        <div class="card" data-card-id="">
-          <span class="card-value"></span>
-          <span class="card-suit"></span>
-        </div>
-      </template>
+  <!-- Templates -->
+  <template id="faceDown-card-template">
+    <div class="card back">?</div>
+  </template>
 
-      <template id="player-template">
-        <div class="player">
-          <div class="player-name"></div>
-          <div class="hand"></div>
-          <div class="middle-pile-btn">Place Card</div>
-        </div>
-      </template>
+  <template id="face-card-template">
+    <div class="card">
+      <div class="card-label"></div>
+      <div class="card-suit"></div>
+    </div>
+  </template>
 
-      <template id="opponent-template">
-        <div class="player">
-          <div class="hand"></div>
-          <div class="hand-count"></div>
-        </div>
-      </template>
-    </main>
-  </body>
+  <template id="number-card-template">
+    <div class="card">
+      <div class="card-number"></div>
+      <div class="card-suit"></div>
+    </div>
+  </template>
+
+  <template id="card-template">
+    <div class="card" data-card-id="">
+      <span class="card-value"></span>
+      <span class="card-suit"></span>
+    </div>
+  </template>
+
+  <template id="player-template">
+    <div class="player">
+      <div class="player-name"></div>
+      <div class="hand"></div>
+      <div class="middle-pile-btn">Place Card</div>
+    </div>
+  </template>
+
+  <template id="opponent-template">
+    <div class="player">
+      <div class="hand"></div>
+      <div class="hand-count"></div>
+    </div>
+  </template>
+
   <script>
-  window.USER_ID = "<%= user.id %>";
-</script>
+    window.USER_ID = "<%= user.id %>";
+  </script>
+</body>
 </html>
