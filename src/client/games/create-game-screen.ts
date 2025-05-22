@@ -1,6 +1,5 @@
 import { Card, PlayerGameState } from "global";
 import { createCard } from "./create-card";
-import { cloneTemplate } from "../utils";
 import elements from "../elements";
 
 export const drawGameScreen = (state: PlayerGameState) => {
@@ -9,6 +8,7 @@ export const drawGameScreen = (state: PlayerGameState) => {
   if (!container) return;
 
   container.innerHTML = "";
+
 
   // Top opponent
   const topDiv = document.createElement("div");
@@ -50,4 +50,21 @@ export const drawGameScreen = (state: PlayerGameState) => {
   });
   container.appendChild(userDiv);
 
+  // === Add Play and Call BS buttons ===
+  const buttonContainer = document.createElement("div");
+  buttonContainer.id = "play-controls";
+
+  const playBtn = document.createElement("button");
+  playBtn.innerText = "Play Cards";
+  playBtn.id = "play-button";
+  playBtn.className = "game-button";
+
+  const bsBtn = document.createElement("button");
+  bsBtn.innerText = "Call BS";
+  bsBtn.id = "bs-button";
+  bsBtn.className = "game-button";
+
+  buttonContainer.appendChild(playBtn);
+  buttonContainer.appendChild(bsBtn);
+  container.appendChild(buttonContainer);
 };

@@ -35,4 +35,7 @@ export const start = async (gameId: number) => {
 
   // ✅ Set current player to the first player
   await setCurrentPlayer(gameId, players[0].id);
+
+  await db.none(`UPDATE games SET started = true WHERE id = $1`, [gameId]);
+
 };
