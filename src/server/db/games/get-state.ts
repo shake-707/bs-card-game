@@ -21,17 +21,17 @@ export const getState = async (gameId: number): Promise<GameState> => {
   const playerInfo: Record<string, PlayerInfo> = {};
 
   for (const player of players) {
-    const { id: userId, user_name, turn_order, is_current: isCurrent } = player;
+    const { id, user_id, turn_order, is_current: isCurrent } = player;
 
     const hand = await db.any(GET_CARD_SQL, {
       gameId,
-      userId,
-      pile: PLAYER_HAND, // still passed in but not used in query (remove if unnecessary)
+      userId: id,
+      pile: PLAYER_HAND,
     });
 
-    playerInfo[userId] = {
-      id: userId,
-      user_name,
+    playerInfo[id] = {
+      id,
+      user_id,
       seat: turn_order,
       isCurrent,
       hand,

@@ -57,16 +57,16 @@ const userId = Number(contentDiv?.dataset.userId);
 //   }
 // }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   loadGames();
+document.addEventListener("DOMContentLoaded", () => {
+  
 
-//   createGameButton?.addEventListener("click", (e) => {
-//     e.preventDefault();
-//     createGameContainer?.classList.add("visible");
-//   });
+  createGameButton?.addEventListener("click", (e) => {
+    e.preventDefault();
+    createGameContainer?.classList.add("visible");
+  });
 
-//   closeButton?.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     createGameContainer?.classList.remove("visible");
-//   });
-// });
+  closeButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    createGameContainer?.classList.remove("visible");
+  });
+});

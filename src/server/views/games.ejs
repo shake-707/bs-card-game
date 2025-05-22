@@ -19,7 +19,7 @@
               <button id="start-game-button" class="shown">Start Game</button>
             <% } else if (!started) { %>
               <strong>Waiting for host...</strong>
-              <p>Players in Game: <%= playerCount %></p>
+              <p>Players in Game: <%= playerCount -1 %></p>
             <% } %>
           </div>
 
@@ -66,4 +66,7 @@
       </template>
     </main>
   </body>
+  <script>
+  window.USER_ID = "<%= user.id %>";
+</script>
 </html>

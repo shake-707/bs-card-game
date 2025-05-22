@@ -5,9 +5,11 @@ const SQL = `
   SELECT user_id 
   FROM game_users 
   WHERE game_id = $1 
+    AND user_id != 0
   ORDER BY turn_order ASC 
   LIMIT 1
 `;
+
 
 
 export const getHost = async (gameId: number) => {

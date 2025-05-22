@@ -43,7 +43,7 @@ export const drawGameScreen = (state: PlayerGameState) => {
   userDiv.id = "user-cards";
   const name = document.createElement("div");
   name.className = "player-name";
-  name.innerText = currentPlayer.user_name;
+  name.innerText = currentPlayer.user_id.toString();
   userDiv.appendChild(name);
   currentPlayer.hand.forEach((card) => {
     userDiv.appendChild(createCard(card));

@@ -7,28 +7,28 @@ export type User = {
     user_name: string;
 };
 
- export type ChatMessage = {
+export type ChatMessage = {
     message: string;
     sender: User;
     timestamp: Date;
 };
 
- export type Card = {
+export type Card = {
   id: number;
   value: number; // 0 = A, 12 = K
   suit: 'hearts' | 'diamonds' | 'clubs' | 'spades';
 };
 
- export type Player = {
+export type Player = {
   id: number;
-  user_name: string;
+  user_id: number;
   seat: number;
   isCurrent: boolean;
 };
 
 export type PlayerInfo = {
   id: number;
-  user_name: string;
+  user_id: number;
   seat: number;
   isCurrent: boolean;
   hand: Card[];
@@ -37,7 +37,7 @@ export type PlayerInfo = {
 
 export type OtherPlayerInfo = {
   id: number;
-  user_name: string;
+  user_id: number;
   seat: number;
   handCount: number;
   isCurrent: boolean;
@@ -51,7 +51,7 @@ export type GameInfo = {
   game_end?: Date;
 };
 
- export type GameState = {
+export type GameState = {
   currentTurn: number;
   currentValueIndex: number;
   middlePile: Card[];
@@ -79,18 +79,3 @@ export type GetGameInfoResponse = {
   player_count: number;
   has_started: boolean;
 };
-
-
-
-
-
-export declare module "express-session" {
-  interface SessionData {
-    user: {
-      id: number;
-      email: string;
-      gravatar: string;
-      user_name:string;
-    };
-  }
-}

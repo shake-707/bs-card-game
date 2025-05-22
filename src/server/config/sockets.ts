@@ -30,6 +30,7 @@ const configureSockets = (io: Server, app: Express,sessionMiddleWare: RequestHan
         } else {
             console.log(' Anonymous user connected.');
         }
+
     
         socket.on('disconnect', () => {
             // @ts-ignore

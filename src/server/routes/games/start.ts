@@ -18,7 +18,8 @@ export const start = async (request: Request, response: Response) => {
   const gameInfo = await Game.getInfo(gameId);
 
   // Ensure game has exactly 4 players (for BS)
-  if (gameInfo.player_count < 4) {
+  // 0 for middle pile and 1-4 for players 
+  if (gameInfo.player_count < 5) {
     // You could emit a socket message here to notify
     console.log('not enough players');
     return response.status(200).send("Not enough players to start.");
@@ -26,6 +27,6 @@ export const start = async (request: Request, response: Response) => {
   
   await Game.start(gameId);
   await broadcastGameState(gameId, request.app.get("io"));
-
+  
   return response.status(200).send("Game started");
 };
