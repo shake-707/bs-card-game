@@ -61,7 +61,7 @@
     "supertest": "^7.1.1",
     "ts-jest": "^29.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2",
+    "typescript": "^5.8.3",
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2"
   },

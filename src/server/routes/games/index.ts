@@ -6,6 +6,7 @@ import { start } from "./start";
 import { ping } from "./ping";
 import { play } from "./play";
 import { callBs } from "./call-bs";
+import { checkWinner } from "./check-winner";
 
 const router = express.Router();
 
@@ -20,4 +21,7 @@ router.post("/:gameId/ping", ping);
 router.post("/:gameId/bs", callBs);
 // @ts-ignore
 router.post("/:gameId/play", play);
+//@ts-ignore
+router.get("/:gameId/check-winner", checkWinner);
+
 export default router;
