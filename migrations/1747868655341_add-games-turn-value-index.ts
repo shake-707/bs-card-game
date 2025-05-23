@@ -5,12 +5,12 @@ export const up = (pgm: MigrationBuilder) => {
     current_turn: {
       type: "integer",
       notNull: true,
-      default: 0,
+      default: 1,
     },
     current_value_index: {
       type: "integer",
       notNull: true,
-      default: 0,
+      default: 1,
     },
   });
 };

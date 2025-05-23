@@ -3,7 +3,7 @@ import { cloneTemplate } from "../utils";
 import { createCard } from "./create-card";
 import { getGameId } from "../utils";
 import { post } from "./fetch-wrapper";
-import { getSelectedCardId } from "./get-select-card-id";
+import { getSelectedCardIds } from "./get-select-card-id";
 
 const playerPositions: Record<number, string> = {};
 
@@ -18,10 +18,13 @@ const POSITION_MAPS = [
 const initSeatOrder = (gameState: PlayerGameState) => {
   const allPlayers = [
     ...Object.entries(gameState.otherPlayers).map(([id, { seat }]) => ({
-      playerId: parseInt(id),
+      playerId: parseInt(id, 10),
       seat,
     })),
-    { playerId: gameState.currentPlayer.id, seat: gameState.currentPlayer.seat },
+    {
+      playerId: gameState.currentPlayer.id,
+      seat: gameState.currentPlayer.seat,
+    },
   ];
 
   const sorted = allPlayers.sort((a, b) => a.seat - b.seat);
@@ -67,19 +70,17 @@ export const currentPlayer = ({
   handArea.addEventListener("click", (e) => {
     const target = (e.target as HTMLElement).closest<HTMLDivElement>(".card");
     if (!target) return;
-
-    handArea.querySelectorAll(".card").forEach((c) => c.classList.remove("selected"));
-    target.classList.add("selected");
+    target.classList.toggle("selected");
   });
 
   const pileBtn = el.querySelector<HTMLDivElement>(".middle-pile-btn");
   if (pileBtn) {
     pileBtn.addEventListener("click", () => {
-      const selectedCardId = getSelectedCardId();
-      if (!selectedCardId) return;
+      const selected = getSelectedCardIds();
+      if (selected.length === 0) return;
 
       post(`/games/${getGameId()}/play`, {
-        selectedCardId: parseInt(selectedCardId),
+        selectedCardIds: selected.map((id) => parseInt(id, 10)),
       });
     });
   }
@@ -95,8 +96,8 @@ export const otherPlayer = (
   const el = cloneTemplate("#opponent-template").querySelector<HTMLDivElement>(".player")!;
   el.classList.add(getPlayerPosition(player.id, gameState));
 
-  const handCountDiv = el.querySelector<HTMLDivElement>(".hand-count");
-  handCountDiv!.innerText = `${player.handCount}`;
+  const handCountDiv = el.querySelector<HTMLDivElement>(".hand-count")!;
+  handCountDiv.innerText = `${player.handCount}`;
 
   const cardContainer = el.querySelector<HTMLDivElement>(".hand")!;
   for (let i = 0; i < player.handCount; i++) {

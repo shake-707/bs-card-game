@@ -4,6 +4,8 @@ import { get } from "./get";
 import { join } from "./join";
 import { start } from "./start";
 import { ping } from "./ping";
+import { play } from "./play";
+import { callBs } from "./call-bs";
 
 const router = express.Router();
 
@@ -14,6 +16,8 @@ router.post("/join/:gameId", join);
 router.post("/:gameId/start", start);
 // @ts-ignore
 router.post("/:gameId/ping", ping);
-
-
+// @ts-ignore
+router.post("/:gameId/bs", callBs);
+// @ts-ignore
+router.post("/:gameId/play", play);
 export default router;

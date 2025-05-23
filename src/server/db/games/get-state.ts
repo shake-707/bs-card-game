@@ -26,7 +26,6 @@ export const getState = async (gameId: number): Promise<GameState> => {
     const hand = await db.any(GET_CARD_SQL, {
       gameId,
       userId: gameUserId,
-      pile: PLAYER_HAND,
     });
 
     playerInfo[user_id] = {
@@ -40,16 +39,22 @@ export const getState = async (gameId: number): Promise<GameState> => {
 
   }
 
-  const middlePile = await db.any(GET_CARD_SQL, {
-    gameId,
-    userId: 0,
-    pile: MIDDLE_PILE,
-  });
-
-  const gameMeta = await db.one(
-    `SELECT current_turn, current_value_index FROM games WHERE id = $1`,
+  const { id: systemGameUserId } = await db.one<{ id: number }>(
+    `SELECT id FROM game_users WHERE game_id = $1 AND user_id = 0`,
     [gameId]
   );
+
+  const middlePile = await db.any(GET_CARD_SQL, {
+    gameId,
+    userId: systemGameUserId,
+  });
+
+  const gameMeta = await db.one<{
+    current_turn: number;
+    current_value_index: number;
+  }>(`SELECT current_turn, current_value_index FROM games WHERE id = $1`, [
+    gameId,
+  ]);
 
   return {
     currentTurn: gameMeta.current_turn,

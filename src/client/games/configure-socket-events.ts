@@ -4,7 +4,7 @@ import { socket } from "../sockets";
 import { getGameId, getUserId } from "../utils";
 import { drawGameScreen } from "./create-game-screen";
 import { currentPlayer, otherPlayer } from "./create-players";
-
+import { configurePlayAndBsButtons } from "./create-play-and-bs-buttons";
 
 export const configureSocketEvents = () => {
   
@@ -20,6 +20,7 @@ export const configureSocketEvents = () => {
     
     // Render the full game screen with updated state
     drawGameScreen(gameState);
+    configurePlayAndBsButtons();
   });
   console.log('hello');
   socket.on(`game:${gameId}:error`, ({ error }: { error: string }) => {
