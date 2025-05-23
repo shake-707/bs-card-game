@@ -1,18 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>BS Card Game</title>
+    <link rel="stylesheet" href="/styles.css" />
     <script src="/js/chat/index.js"></script>
-</head>
-<body>
-    
-    <h1><%= title %></h1>
-    <p>Welcome to the site <%= name %> </p>
-    <ul>
-        <% for(let i = 0; i < 10; i++) { %>
-        <li> Item <%= i %> </li>
-        <% }%>
-    </ul>
-</body>
+  </head>
+
+  <body>
+    <%- include('shared/menu', { user }) %>
+
+    <main>
+      <div class="container" style="text-align: center;">
+        <h1>Welcome to BS Card Game</h1>
+        <p>Bluff your way to victory in this strategic card game of lies and laughter.</p>
+
+        <ul style="text-align: left; margin: 1rem auto; max-width: 400px;">
+          <li><strong>Create a game</strong> and invite friends.</li>
+          <li><strong>Join a lobby</strong> to start playing.</li>
+          <li><strong>Compete</strong> and call out the BS!</li>
+        </ul>
+
+        <p style="font-weight: bold; font-size: 1.1rem; margin-top: 1.5rem;">
+          <em>Login or register today to start playing!</em>
+        </p>
+
+        <div style="text-align: left; margin-top: 2rem; max-width: 500px; margin-inline: auto;">
+          <h2>Instructions:</h2>
+          <ol>
+            <li>The game is played with a standard 52-card deck.</li>
+            <li>Players take turns placing cards face down in the center, claiming what they are (e.g., "two Jacks").</li>
+            <li>Other players can challenge by calling "BS!" if they think it's a lie.</li>
+            <li>If the cards are not what was claimed, the liar picks up the pile. If they were honest, the challenger picks it up.</li>
+            <li>The goal is to be the first to get rid of all your cards.</li>
+          </ol>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Debug/Test Info</h3>
+          <p>Welcome to the site <%= name %></p>
+          <ul>
+            <% for(let i = 0; i < 10; i++) { %>
+              <li>Item <%= i %></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
