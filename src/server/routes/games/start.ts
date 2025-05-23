@@ -21,6 +21,7 @@ export const start = async (request: Request, response: Response) => {
   // 0 for middle pile and 1-4 for players 
   if (gameInfo.player_count < 5) {
     // You could emit a socket message here to notify
+    console.error('not enough players');
     console.log('not enough players');
     return response.status(200).send("Not enough players to start.");
   }

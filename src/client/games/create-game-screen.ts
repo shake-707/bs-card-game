@@ -240,4 +240,7 @@ export const drawGameScreen = (state: PlayerGameState) => {
     .catch((err) => {
       console.error("Failed to check winner:", err);
     });
+
+    
+
 };
