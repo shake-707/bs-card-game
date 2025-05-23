@@ -38,6 +38,11 @@
   text-align: center;
 }
 
+#user-cards .card.selected {
+  outline: 2px solid orange;
+  box-shadow: 0 0 5px orange;
+}
+
 .card {
   background-color: white;
   border: 1px solid black;
@@ -167,4 +172,34 @@
   gap: 0.5rem;
   z-index: 10;
   flex-direction: row;
+}
+
+#user-cards .card.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+button.game-button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.current-turn {
+  outline: 3px solid gold;
+  border-radius: 4px;
+  padding: 0.2rem;
+  margin: -0.2rem;
+}
+
+#value-banner {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  z-index: 20;
 }

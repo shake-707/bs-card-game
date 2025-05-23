@@ -38,4 +38,11 @@ export const start = async (gameId: number) => {
 
   await db.none(`UPDATE games SET started = true WHERE id = $1`, [gameId]);
 
+  await db.none(
+    `UPDATE games
+       SET current_turn = 0,
+           current_value_index = 0
+     WHERE id = $1`,
+    [gameId]
+  );
 };

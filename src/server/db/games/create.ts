@@ -8,7 +8,7 @@ const CREATE_GAME_SQL = `
 
 export const ADD_PLAYER_SQL = `
   INSERT INTO game_users (game_id, user_id, turn_order, cards_placed_down)
-  SELECT $1, $2, 0, 0
+  SELECT $1, $2, 1, 0
   WHERE NOT EXISTS (
     SELECT 1 FROM game_users WHERE game_id = $1 AND user_id = $2
   )

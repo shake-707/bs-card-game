@@ -1,10 +1,7 @@
-export const getSelectedCardId = () => {
-  const selectedCards =
-    document.querySelectorAll<HTMLDivElement>(".card.selected");
+export const getSelectedCardIds = (): string[] =>
+  Array.from(document.querySelectorAll<HTMLDivElement>(".card.selected"))
+    .map((el) => el.dataset.cardId!)
+    .filter(Boolean);
 
-  if (selectedCards.length === 1) {
-    const selectedCardId = selectedCards[0].dataset.cardId;
-
-    return selectedCardId;
-  }
-};
+export const getSelectedCardId = (): string | undefined =>
+  getSelectedCardIds()[0];
