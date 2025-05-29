@@ -2,7 +2,8 @@ import { DbGameUser, User } from "global";
 import db from "../connection";
 
 const SQL = `
-SELECT users.id, users.email, users.gravatar, users.user_name, game_users.*
+SELECT users.id, users.email, users.gravatar, users.user_name, game_users.*,
+game_users.id AS game_user_id
 FROM users
 JOIN game_users ON users.id = game_users.user_id
 WHERE game_users.game_id = $1 AND game_users.user_id != 0

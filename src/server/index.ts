@@ -31,10 +31,15 @@ async function startServer() {
   const sessionMiddleWare = config.session(app);
   config.socket(io, app, sessionMiddleWare);
 
+  // logs incoming https request to console
   app.use(morgan("dev"));
+
   app.use(cookieParser());
   app.use(express.json());
+
+  // lets us handle form submissions and requests from and html page
   app.use(express.urlencoded({ extended: false }));
+  
   app.use(middleware.timeMiddleware);
   app.use(express.static(path.join(process.cwd(), "public")));
   app.use("/messages", routes.messages);
@@ -52,7 +57,7 @@ async function startServer() {
   app.use((_req, _res, next) => next(httpErrors(404)));
 
   httpServer.listen(PORT, () =>
-    console.log(`🚀  Server running on http://localhost:${PORT}`)
+    console.log(`Server running on http://localhost:${PORT}`)
   );
 }
 

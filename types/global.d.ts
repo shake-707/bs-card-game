@@ -1,7 +1,7 @@
 import "express-session";
 
 export type User = {
-    id: number;
+    user_id: number;
     email: string;
     gravatar: string;
     user_name: string;
@@ -67,6 +67,7 @@ export type PlayerGameState = {
 };
 
 export type DbGameUser = {
+  game_user_id: number;
   game_id: number;
   user_id: number;
   turn_order: number;

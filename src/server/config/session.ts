@@ -1,5 +1,7 @@
 import type { Express, RequestHandler } from "express";
 import session from "express-session";
+
+// adapter that saves sessions into postgres
 import connectPgSimple from "connect-pg-simple";
 
 let sessionMiddleWare: RequestHandler;

@@ -3,6 +3,8 @@ import { broadcastGameStateToPlayer } from "./broadcast-game-state";
 
 export const ping = async (request: Request, response: Response) => {
   try {
+
+    console.log(request.session);
     // @ts-ignore
     const { id: userId } = request.session.user!;
     const gameId = Number(request.params.gameId);

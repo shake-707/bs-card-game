@@ -19,17 +19,19 @@ export const getState = async (gameId: number): Promise<GameState> => {
   const players = await getPlayers(gameId);
 
   const playerInfo: Record<string, PlayerInfo> = {};
-
+  console.log(players[0]);
   for (const player of players) {
-    const { id: gameUserId, user_id, turn_order, is_current: isCurrent } = player;
+    console.log('player user id is: ' + player.user_id + ' player game user id is: ' + player.game_user_id);
+    const { game_user_id, user_id, turn_order, is_current: isCurrent } = player;
+    // const { id: gameUserId, user_id, turn_order, is_current: isCurrent } = player;
 
     const hand = await db.any(GET_CARD_SQL, {
       gameId,
-      userId: gameUserId,
+      userId: game_user_id,
     });
 
     playerInfo[user_id] = {
-      id: gameUserId,           // game_users.id
+      id: game_user_id,           // game_users.id
       user_id,      // users.id (real user ID)
       seat: turn_order,
       isCurrent,
