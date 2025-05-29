@@ -64,7 +64,12 @@ export const drawGameScreen = (state: PlayerGameState) => {
   });
 
   console.log('length of middle pile ', middlePile.length);
-  //pileDiv.appendChild(document.createTextNode(`  (${middlePile.length} in pile)`));
+  // pileDiv.appendChild(document.createTextNode(`  (${middlePile.length} in pile)`));
+  const pileCountDiv = document.createElement("div");
+  pileCountDiv.className = "pile-count";
+  pileCountDiv.innerText = `(${middlePile.length} in pile)`;
+  pileDiv.appendChild(pileCountDiv);
+
   container.appendChild(pileDiv);
 
   // User cards

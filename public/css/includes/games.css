@@ -205,3 +205,10 @@ button.game-button:disabled {
   border-radius: 4px;
   z-index: 20;
 }
+
+.pile-count {
+  margin-top: 60px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}

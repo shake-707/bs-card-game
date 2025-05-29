@@ -1,11 +1,14 @@
 @import url("/css/includes/games.css");
+@import url("/css/includes/chat.css");
 
 body {
     font-size: var(--font-size);
 }
 
-.gravatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
+
