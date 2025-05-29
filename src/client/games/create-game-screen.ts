@@ -53,8 +53,18 @@ export const drawGameScreen = (state: PlayerGameState) => {
   // Middle pile
   const pileDiv = document.createElement("div");
   pileDiv.id = "card-pile";
+  
   middlePile.forEach(() => pileDiv.appendChild(createCard()));
-  pileDiv.appendChild(document.createTextNode(`  (${middlePile.length} in pile)`));
+  
+  const pileCards = pileDiv.querySelectorAll<HTMLDivElement>('.card');
+
+  pileCards.forEach((card, i) => {
+    card.style.zIndex = i.toString();
+    card.style.transform = `rotate(${i * 4}deg)`;
+  });
+
+  console.log('length of middle pile ', middlePile.length);
+  //pileDiv.appendChild(document.createTextNode(`  (${middlePile.length} in pile)`));
   container.appendChild(pileDiv);
 
   // User cards

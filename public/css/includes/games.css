@@ -111,14 +111,16 @@
 }
 
 #card-pile .card {
-  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: bottom left;
   background-color: blue;
   border: 2px solid black;
   border-radius: 5px;
   padding: 0.5rem 1rem;
   font-size: 1.5rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  margin-bottom: 0.5rem;
 }
 
 #user-cards .player-name {
