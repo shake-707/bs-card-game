@@ -1,12 +1,14 @@
-import { Card, PlayerGameState, OtherPlayerInfo } from "global";
+import { Card, PlayerGameState, OtherPlayerInfo, GameState } from "global";
 import { createCard } from "./create-card";
 import elements from "../elements";
 import { getGameId } from "../utils";
 
-export const drawGameScreen = (state: PlayerGameState) => {
-  const { currentPlayer, otherPlayers, middlePile } = state;
+export const drawGameScreen = (state: PlayerGameState,) => {
+  const { currentPlayer, otherPlayers, middlePile, gameLog } = state;
   const container = elements.PLAY_AREA;
   if (!container) return;
+
+  
 
   container.innerHTML = "";
 
@@ -122,6 +124,23 @@ export const drawGameScreen = (state: PlayerGameState) => {
 
   buttonContainer.append(playBtn, bsBtn);
   container.appendChild(buttonContainer);
+
+  // create game log
+  const logDiv = document.createElement("div");
+  logDiv.className = 'log-div';
+  for (let i = 0; i < gameLog.length; i++) {
+    const logP = document.createElement("p");
+    logP.innerHTML = `Turn ${i + 1}: ` + gameLog[i]; 
+    logDiv.appendChild(logP);
+  }
+
+  while (logDiv.children.length > 4) {
+    logDiv.removeChild(logDiv.firstElementChild!);
+  }
+  // move log screen
+  const lastLog = document.querySelector(".log-div :last-child");
+
+  container.appendChild(logDiv);
 
   // === Check for game winner via backend ===
   console.log('currentplayer: id ' + currentPlayer.id);

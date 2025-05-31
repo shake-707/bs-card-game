@@ -56,6 +56,7 @@ export type GameState = {
   currentValueIndex: number;
   middlePile: Card[];
   players: Record<string, PlayerInfo>;
+  gameLogs: string[];
 };
 
 export type PlayerGameState = {
@@ -64,6 +65,7 @@ export type PlayerGameState = {
   middlePile: Card[];
   currentTurn: number;
   currentValueIndex: number;
+  gameLog: string[];
 };
 
 export type DbGameUser = {

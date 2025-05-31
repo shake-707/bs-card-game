@@ -10,6 +10,7 @@ import {start} from "./start-game";
 import { dealCards } from "./deal-cards";
 import { getPlayers } from "./get-players";
 import { getInfo } from "./get-info";
+import { getGameLogs } from "./get-game-log";
 
 
 // const CREATE_GAME_SQL = `
@@ -76,5 +77,6 @@ export default {
   getPlayers,
   dealCards,
   setCurrentPlayer,
-  getInfo
+  getInfo,
+  getGameLogs
 };

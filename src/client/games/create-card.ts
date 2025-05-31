@@ -61,6 +61,7 @@ const createNumberCard = (card: Card) => {
 const createFaceDownCard = () => {
   const div = cloneTemplate("#faceDown-card-template");
   div.querySelector<HTMLDivElement>(".card")!.classList.add("blank");
+  div.querySelector<HTMLDivElement>(".card")!.classList.add("opponent-card");
   return div;
 };
 

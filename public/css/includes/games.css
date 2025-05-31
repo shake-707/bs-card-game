@@ -212,3 +212,24 @@ button.game-button:disabled {
   font-weight: bold;
   text-align: center;
 }
+
+.log-div {
+  position: relative;
+  font-size: 15px;
+  font-weight: 100;
+  margin: 0.5px;
+  top: 325px;
+  left: -325px;
+  line-height: 25px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.log-div p {
+  margin: 0;
+  padding: 0;
+}
+
+.blank {
+  background-color: blue;
+}

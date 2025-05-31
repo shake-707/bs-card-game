@@ -2,6 +2,7 @@ import { Card, GameState, PlayerInfo, OtherPlayerInfo } from "global";
 import { Server } from "socket.io";
 import { Game } from "../../db";
 
+
 const createPlayerState = (
   game: GameState,
   currentPlayer: PlayerInfo
@@ -28,6 +29,7 @@ const createPlayerState = (
     middlePile: game.middlePile,
     currentTurn: game.currentTurn,
     currentValueIndex: game.currentValueIndex,
+    gameLog: game.gameLogs,
   };
 };
 
@@ -45,6 +47,7 @@ export const broadcastGameStateToPlayer = async (
     `game:${gameId}:updated`,
     createPlayerState(gameState, playerInfo)
   );
+
 };
 
 export const broadcastGameState = async (gameId: number, io: Server) => {

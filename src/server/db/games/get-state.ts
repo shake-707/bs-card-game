@@ -5,6 +5,7 @@ import {
   PLAYER_HAND,
 } from "./constants";
 import { getPlayers } from "./get-players";
+import { getGameLogs } from "./get-game-log";
 
 const GET_CARD_SQL = `
 SELECT cards.*
@@ -18,6 +19,10 @@ ORDER BY cards.id DESC
 export const getState = async (gameId: number): Promise<GameState> => {
   const players = await getPlayers(gameId);
 
+  const getLogs = await getGameLogs(gameId);
+
+  const gameLogs: string[] = [];
+
   const playerInfo: Record<string, PlayerInfo> = {};
   console.log(players[0]);
   for (const player of players) {
@@ -30,6 +35,7 @@ export const getState = async (gameId: number): Promise<GameState> => {
       userId: game_user_id,
     });
 
+
     playerInfo[user_id] = {
       id: game_user_id,           // game_users.id
       user_id,      // users.id (real user ID)
@@ -40,6 +46,37 @@ export const getState = async (gameId: number): Promise<GameState> => {
     };
 
   }
+
+  for ( const log of getLogs) {
+        const { cards_count, user_id, expected_value, action } = log;
+        const actionType = action.split(" ")[0];
+        let logString = "";
+        // action get first word from string 
+        /*
+        played: played cards
+        called: called bs
+        BS: bs called failed player telling truth
+        caught: bs called succuessful player lied 
+        */
+        switch(actionType) { 
+          case "played":
+            logString = `User: ${user_id} played ${cards_count}.`;
+            break;
+          case "called":
+            logString = `User: ${user_id} called BS`;
+            break;
+          case "BS": 
+            logString = `BS call failed`;
+            break;
+          case "caught":
+            logString = `BS call successful`;
+            break;
+          default:
+        }
+        gameLogs.push(logString);
+
+
+    }
 
   const { id: systemGameUserId } = await db.one<{ id: number }>(
     `SELECT id FROM game_users WHERE game_id = $1 AND user_id = 0`,
@@ -63,5 +100,6 @@ export const getState = async (gameId: number): Promise<GameState> => {
     currentValueIndex: gameMeta.current_value_index,
     middlePile,
     players: playerInfo,
+    gameLogs,
   };
 };
