@@ -83,7 +83,7 @@ const { expected_value: claimedValue } = await db.one<{
       [gameId]
     );
 
-    await setCurrentPlayer(gameId, loserUserId);
+    //await setCurrentPlayer(gameId, loserUserId);
 
     const pileCount = pileCards.length;
     await db.none(

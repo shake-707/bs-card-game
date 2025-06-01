@@ -23,7 +23,15 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   container.appendChild(valueBanner);
 
   const isMyTurn = currentPlayer.isCurrent;
+  
+
+ 
   const oppArray = Object.values(otherPlayers) as OtherPlayerInfo[];
+
+   const justPlayed = oppArray.some((opp) => {
+      return opp.isCurrent && opp.seat === currentPlayer.seat + 1;
+   });
+  
 
   const makeOppDiv = (
     posClass: "side-opponent left" | "side-opponent right" | "top-opponent",
@@ -41,6 +49,7 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   oppArray.forEach((opp) => {
     console.log('oponent id: ' + opp.id);
   })
+  
 
   container.appendChild(
     makeOppDiv("side-opponent left", oppArray[0] ?? { handCount: 0, isCurrent: false } as any)
@@ -120,13 +129,19 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   bsBtn.id = "bs-button";
   bsBtn.className = "game-button";
   bsBtn.innerText = "Call BS";
-  bsBtn.disabled = false;
+  bsBtn.disabled = justPlayed;
+  
+ 
 
+   
   buttonContainer.append(playBtn, bsBtn);
   container.appendChild(buttonContainer);
 
   // create game log
   const logDiv = document.createElement("div");
+  const logTitle = document.createElement("h3");
+  logTitle.innerHTML = 'Game Log';
+  logDiv.appendChild(logTitle);
   logDiv.className = 'log-div';
   for (let i = 0; i < gameLog.length; i++) {
     const logP = document.createElement("p");
@@ -134,13 +149,22 @@ export const drawGameScreen = (state: PlayerGameState,) => {
     logDiv.appendChild(logP);
   }
 
-  while (logDiv.children.length > 4) {
-    logDiv.removeChild(logDiv.firstElementChild!);
-  }
-  // move log screen
-  const lastLog = document.querySelector(".log-div :last-child");
-
   container.appendChild(logDiv);
+
+  // move the log screen
+  while (logDiv.children.length > 5) {
+    
+    const oldestLog = document.querySelector(".log-div p");
+    
+  
+    // removing the oldest log from div container
+    logDiv.removeChild(oldestLog!);
+    //logDiv.removeChild(logDiv.firstElementChild!);
+    //logDiv.removeChild(document.querySelector(".log-div :nth-child(2)")!);
+  }
+
+
+
 
   // === Check for game winner via backend ===
   console.log('currentplayer: id ' + currentPlayer.id);
