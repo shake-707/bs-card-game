@@ -19,58 +19,43 @@
           <li><strong>Email:</strong> <%= user.email %></li>
           <!--<li><strong>Gravatar Hash:</strong> <%= user.gravatar %></li>-->
         </ul>
-        
-        <img
-          src="https://www.gravatar.com/avatar/<%= user.gravatar %>"
-          alt="Gravatar"
-          width="100"
-          style="margin-top: 1rem;"
-        /> 
+      
 
-        <div style="margin-top: 2rem; text-align: center;">
-          <button onclick="location.href='/auth/logout'" style="background-color: #777; max-width: 200px;">
-            Logout
-          </button>
-        </div> 
+        
       </div>
       <div id="content" data-user-id="<%= user.id %>">
-        <div style="margin: 2rem 0; text-align: center;">
-          <button id="create-game-button">Create Game</button>
+        <div id="game-column">
+          <div id="create-game-btn-container" style="text-align: center; margin-bottom: 1rem;">
+            <button id="create-game-button">Create Game</button>
+          </div>
+
+          <section id="game-listing">
+            <h2>Your Games (<%= currentGames.length %>)</h2>
+            <ul>
+              <% currentGames.forEach(game => { %>
+                <li>
+                  Game <%= game.id %> hosted by <%= game.host_id === user.id ? "You" : game.host_name %> 
+                  (<%= game.player_count %> players)
+                  <button id="return-btn" onclick="location.href='/games/<%= game.id %>'">Return</button>
+                </li>
+              <% }) %>
+            </ul>
+
+            <h2>Joinable Games (<%= availableGames.length %>)</h2>
+            <ul>
+              <% availableGames.forEach(game => { %>
+                <li>
+                  Game <%= game.id %> hosted by <%= game.host_id === user.id ? "You" : game.host_name %> 
+                  (<%= game.player_count %> players)
+                  <form method="POST" action="/games/join/<%= game.id %>" style="display:inline;">
+                    <button type="submit">Join</button>
+                  </form>
+                </li>
+              <% }) %>
+            </ul>
+          </section>
         </div>
 
-        <section id="game-listing">
-          <!-- <h2>Games Playing: <%= currentGames.length %> </h2>
-          <ul id="current-games-list"></ul>
-          <h2>Active Games:  <%= availableGames.length %> </h2>
-          <ul id="active-games-list"></ul>
-          <ul id="games-list">
-          </ul> -->
-          <h2>Your Games (<%= currentGames.length %>)</h2>
-          <ul>
-            <% currentGames.forEach(game => { %>
-              <li>
-                Game <%= game.id %> hosted by <%= game.host_id === user.id ? "You" : game.host_name %> 
-                (<%= game.player_count %> players)
-                <button onclick="location.href='/games/<%= game.id %>'">Return</button>
-              </li>
-            <% }) %>
-          </ul>
-
-          <h2>Joinable Games (<%= availableGames.length %>)</h2>
-          <ul>
-            <% availableGames.forEach(game => { %>
-              <li>
-                Game <%= game.id %> hosted by <%= game.host_id === user.id ? "You" : game.host_name %> 
-                (<%= game.player_count %> players)
-                <form method="POST" action="/games/join/<%= game.id %>" style="display:inline;">
-                  <button type="submit">Join</button>
-                </form>
-
-              </li>
-            <% }) %>
-          </ul>
-
-        </section>
         <section id="chat-container">
           <div id="messages"></div>
           <form>
@@ -78,8 +63,9 @@
             <button type="submit" id="send-button">Send</button>
           </form>
         </section>
-        </div>
-        <input type="hidden" id="game-id" value="0">
+      </div>
+
+      <input type="hidden" id="game-id" value="0">
       
     </main>
     <%- include("games/create-form") %>

@@ -1,6 +1,7 @@
 
 import { ChatMessage } from "../../../types/global";
 
+
 import { socket } from "../sockets";
 
 import { cloneTemplate, getGameId } from "../utils";
@@ -12,8 +13,9 @@ import { cloneTemplate, getGameId } from "../utils";
 
     
 
-    socket?.on(`chat:message:${getGameId()}`, ({ message, sender, timestamp }: ChatMessage) => {
-        console.log("Received chat message:", { message, sender, timestamp });
+    socket?.on(`chat:message:${getGameId()}`, ({ message, sender, timestamp, dbMessages }: ChatMessage) => {
+        console.log("Received chat message:", { message, sender, timestamp, dbMessages });
+        console.log(dbMessages);
         console.log("game id: " + getGameId());
         const messageContainer = document.createElement("div");
         messageContainer.classList.add("message");
@@ -25,7 +27,9 @@ import { cloneTemplate, getGameId } from "../utils";
         img.alt = `Gravatar for ${sender.email}`;
         img.classList.add("avatar");
         messageContainer.appendChild(img);
-        
+        if (dbMessages && Array.isArray(dbMessages)){
+            console.log("logged db message" + dbMessages[0]);
+        }
 
         const messageContent = document.createElement("span");
         messageContent.classList.add("message-content");

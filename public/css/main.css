@@ -12,3 +12,6 @@ body {
   object-fit: cover;
 }
 
+.container {
+  display: block;
+}

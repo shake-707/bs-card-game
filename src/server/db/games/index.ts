@@ -11,6 +11,7 @@ import { dealCards } from "./deal-cards";
 import { getPlayers } from "./get-players";
 import { getInfo } from "./get-info";
 import { getGameLogs } from "./get-game-log";
+import { getMessages } from "./get-messages";
 
 
 // const CREATE_GAME_SQL = `
@@ -78,5 +79,6 @@ export default {
   dealCards,
   setCurrentPlayer,
   getInfo,
-  getGameLogs
+  getGameLogs,
+  getMessages
 };

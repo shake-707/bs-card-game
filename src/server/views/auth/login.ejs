@@ -24,7 +24,7 @@
               name="username"
               id="username"
               required
-              placeholder="Username"
+              placeholder="username"
               <% if (locals.username && username) { %>
                 value="<%= username %>"
               <% } %>
@@ -33,7 +33,7 @@
 
           <div>
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" required />
+            <input type="password" name="password" id="password" placeholder="password" required  />
           </div>
 
           <button type="submit">Login</button>

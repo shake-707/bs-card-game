@@ -11,6 +11,8 @@ export type ChatMessage = {
     message: string;
     sender: User;
     timestamp: Date;
+    user_name: string;
+    dbMessages: string[];
 };
 
 export type Card = {
