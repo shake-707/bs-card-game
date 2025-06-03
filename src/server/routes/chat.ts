@@ -10,14 +10,16 @@ const router = express.Router();
 router.post('/:roomId', async (request: Request, response: Response) => {
     const { roomId } = request.params;
     const { message } = request.body;
-    console.log('enetered');
+    console.log('enetered roomId: ' + roomId);
 
-    
+    console.log('fine here');
     
     try{
     // @ts-ignore
     const { id, email, gravatar, userName } = request.session.user;
+    
     await insertMessage(parseInt(roomId),id, message);
+    
     const dbMessages = await getMessages(parseInt(roomId));
     
     const io = request.app.get("io");
@@ -50,5 +52,25 @@ router.post('/:roomId', async (request: Request, response: Response) => {
 } catch {}
 
 });
+
+router.get('/:gameId/getMessages', async (request: Request, response: Response) => {
+    const { gameId } = request.params;
+    try {
+        const dbMessages = await getMessages(parseInt(gameId));
+
+        if (dbMessages.length === 0) {
+            response.status(200).send('no message currently');
+            return;
+        }
+
+        response.status(200).json(dbMessages);
+    } catch(err) {
+        console.error("Error fetching messages:", err);
+        response.status(500).send("Failed to fetch messages from DB");
+        return;
+    }
+});
+
+
 
 export default router;

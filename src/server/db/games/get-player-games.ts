@@ -7,6 +7,7 @@ FROM games g
 LEFT JOIN game_users gu ON gu.game_id = g.id
 WHERE g.started = false
   AND g.game_has_ended = false
+  AND g.id != 0
 GROUP BY g.id
 HAVING COUNT(CASE WHEN gu.user_id != 0 THEN 1 END) < g.player_count
   AND $1 NOT IN (

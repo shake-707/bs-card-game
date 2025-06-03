@@ -11,12 +11,103 @@ import { cloneTemplate, getGameId } from "../utils";
     const chatForm = document.querySelector<HTMLFormElement>("#chat-container form");
     const chatInput = document.querySelector<HTMLInputElement>("#chat-container input");
 
+    const loadMessages = async () => {
+        try {
+            const res = await fetch(`/chat/${getGameId()}/getMessages`);
+
+            if (!res.ok) {
+            throw new Error(`Failed to fetch messages: ${res.statusText}`);
+            }
+
+            const dbMessages = await res.json() as ChatMessage[];
+
+            if (Array.isArray(dbMessages)) {
+            dbMessages.forEach((mess) => {
+                const messageContainer = document.createElement("div");
+                messageContainer.classList.add("message");
+                const text = document.createElement("p");
+                // @ts-ignore
+                text.innerText = mess.sender;
+                messageContainer.appendChild(text);
+                const img = document.createElement("img");
+                // @ts-ignore
+                img.src = `http://gravatar.com/avatar/${mess.gravatar}?d=identicon`;
+                // @ts-ignore
+                img.alt = `Gravatar for ${mess.sender}`;
+                img.classList.add("avatar");
+                messageContainer.appendChild(img);
+
+                
+
+                const messageContent = document.createElement("span");
+                messageContent.classList.add("message-content");
+                
+                messageContent.innerText = mess.message;
+
+                const messageTimeStamp = document.createElement("span");
+                messageTimeStamp.classList.add("message-timestamp");
+                
+                messageTimeStamp.innerText = new Date(mess.timestamp).toLocaleTimeString();
+
+                messageContainer.appendChild(messageContent);
+                messageContainer.appendChild(messageTimeStamp);
+                
+
+                chatContainer?.appendChild(messageContainer);
+
+            });
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            } else {
+            console.log("Unexpected response:", dbMessages);
+            }
+        } catch (err) {
+            console.error("Error loading messages:", err);
+        }
+    };
+
+    loadMessages();
+    
     
 
-    socket?.on(`chat:message:${getGameId()}`, ({ message, sender, timestamp, dbMessages }: ChatMessage) => {
-        console.log("Received chat message:", { message, sender, timestamp, dbMessages });
-        console.log(dbMessages);
-        console.log("game id: " + getGameId());
+    socket?.on(`chat:message:${getGameId()}`, ({ message, sender, timestamp }: ChatMessage) => {
+       
+        
+        // dbMessages.forEach((mess) => {
+        //     const messageContainer = document.createElement("div");
+        //     messageContainer.classList.add("message");
+        //     const text = document.createElement("p");
+        //     // @ts-ignore
+        //     text.innerText = mess.sender;
+        //     messageContainer.appendChild(text);
+        //     const img = document.createElement("img");
+        //     // @ts-ignore
+        //     img.src = `http://gravatar.com/avatar/${mess.gravatar}?d=identicon`;
+        //     // @ts-ignore
+        //     img.alt = `Gravatar for ${mess.sender}`;
+        //     img.classList.add("avatar");
+        //     messageContainer.appendChild(img);
+
+            
+
+        //     const messageContent = document.createElement("span");
+        //     messageContent.classList.add("message-content");
+        //     // @ts-ignore
+        //     messageContent.innerText = mess.message;
+
+        //     const messageTimeStamp = document.createElement("span");
+        //     messageTimeStamp.classList.add("message-timestamp");
+        //     // @ts-ignore
+        //     messageTimeStamp.innerText = new Date(mess.timestamp).toLocaleTimeString();
+
+        //     messageContainer.appendChild(messageContent);
+        //     messageContainer.appendChild(messageTimeStamp);
+
+        //     chatContainer?.appendChild(messageContainer);
+
+        // });
         const messageContainer = document.createElement("div");
         messageContainer.classList.add("message");
         const text = document.createElement("p");
@@ -27,9 +118,8 @@ import { cloneTemplate, getGameId } from "../utils";
         img.alt = `Gravatar for ${sender.email}`;
         img.classList.add("avatar");
         messageContainer.appendChild(img);
-        if (dbMessages && Array.isArray(dbMessages)){
-            console.log("logged db message" + dbMessages[0]);
-        }
+
+        
 
         const messageContent = document.createElement("span");
         messageContent.classList.add("message-content");
@@ -43,6 +133,10 @@ import { cloneTemplate, getGameId } from "../utils";
         messageContainer.appendChild(messageTimeStamp);
 
         chatContainer?.appendChild(messageContainer);
+
+         if (chatContainer) {
+             chatContainer.scrollTop = chatContainer.scrollHeight;
+         }
     });
 
     chatForm?.addEventListener("submit", (event) => {

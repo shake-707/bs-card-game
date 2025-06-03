@@ -147,21 +147,23 @@ export const drawGameScreen = (state: PlayerGameState,) => {
     const logP = document.createElement("p");
     logP.innerHTML = `Turn ${i + 1}: ` + gameLog[i]; 
     logDiv.appendChild(logP);
+    
   }
 
   container.appendChild(logDiv);
+  logDiv.scrollTop = logDiv.scrollHeight;
 
-  // move the log screen
-  while (logDiv.children.length > 5) {
+  // // move the log screen
+  // while (logDiv.children.length > 5) {
     
-    const oldestLog = document.querySelector(".log-div p");
+  //   const oldestLog = document.querySelector(".log-div p");
     
   
-    // removing the oldest log from div container
-    logDiv.removeChild(oldestLog!);
-    //logDiv.removeChild(logDiv.firstElementChild!);
-    //logDiv.removeChild(document.querySelector(".log-div :nth-child(2)")!);
-  }
+  //   // removing the oldest log from div container
+  //   logDiv.removeChild(oldestLog!);
+  //   //logDiv.removeChild(logDiv.firstElementChild!);
+  //   //logDiv.removeChild(document.querySelector(".log-div :nth-child(2)")!);
+  // }
 
 
 

@@ -13,6 +13,7 @@ export type ChatMessage = {
     timestamp: Date;
     user_name: string;
     dbMessages: string[];
+    gravatar: string;
 };
 
 export type Card = {
