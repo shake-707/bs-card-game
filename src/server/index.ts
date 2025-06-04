@@ -14,6 +14,7 @@ import { Server as IOServer } from "socket.io";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import seedCards from "./db/seedCards";
+import addLobbyGameId from "./db/lobby-game-user";
 
 import * as config from "./config";
 import * as middleware from "./middleware";
@@ -26,6 +27,7 @@ const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   await seedCards();
+  await addLobbyGameId();
 
   config.liveReload(app);
   const sessionMiddleWare = config.session(app);

@@ -13,24 +13,20 @@
     <main>
       <div class="container">
         <h1>Welcome <%= user.userName %></h1>
-       
-        <ul style="text-align: left;">
-          <li><strong>ID:</strong> <%= user.id %></li>
-          <li><strong>Email:</strong> <%= user.email %></li>
-          <!--<li><strong>Gravatar Hash:</strong> <%= user.gravatar %></li>-->
-        </ul>
-      
-
-        
       </div>
       <div id="content" data-user-id="<%= user.id %>">
         <div id="game-column">
-          <div id="create-game-btn-container" style="text-align: center; margin-bottom: 1rem;">
-            <button id="create-game-button">Create Game</button>
-          </div>
+
+          <div id="title-create-game-wrap">
+              <div id="current-games-title"><h2>Current Games</h2></div>
+            <div id="create-game-btn-container">
+              <button id="create-game-button">Create Game</button>
+            </div>
+         </div>
+          
 
           <section id="game-listing">
-            <h2>Your Games (<%= currentGames.length %>)</h2>
+            <h3>Your Games (<%= currentGames.length %>)</h3>
             <ul>
               <% currentGames.forEach(game => { %>
                 <li>
@@ -41,7 +37,7 @@
               <% }) %>
             </ul>
 
-            <h2>Joinable Games (<%= availableGames.length %>)</h2>
+            <h3>Joinable Games (<%= availableGames.length %>)</h3>
             <ul>
               <% availableGames.forEach(game => { %>
                 <li>
