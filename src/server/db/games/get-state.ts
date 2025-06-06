@@ -27,7 +27,7 @@ export const getState = async (gameId: number): Promise<GameState> => {
   console.log(players[0]);
   for (const player of players) {
     console.log('player user id is: ' + player.user_id + ' player game user id is: ' + player.game_user_id);
-    const { game_user_id, user_id, turn_order, is_current: isCurrent } = player;
+    const { game_user_id, user_id, turn_order, is_current: isCurrent, user_name } = player;
     // const { id: gameUserId, user_id, turn_order, is_current: isCurrent } = player;
 
     const hand = await db.any(GET_CARD_SQL, {
@@ -43,6 +43,7 @@ export const getState = async (gameId: number): Promise<GameState> => {
       isCurrent,
       hand,
       handCount: hand.length,
+      userName: user_name,
     };
 
   }

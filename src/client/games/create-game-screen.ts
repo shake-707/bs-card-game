@@ -40,8 +40,11 @@ export const drawGameScreen = (state: PlayerGameState,) => {
     const div = document.createElement("div");
     div.className = posClass;
     if (info.isCurrent) div.classList.add("current-turn");
+    const userNameDiv = document.createElement("div");
+    userNameDiv.appendChild(document.createTextNode(`${info.userName}`));
+    div.appendChild(userNameDiv);
     div.appendChild(createCard());
-    div.appendChild(document.createTextNode(`# of cards: ${info.handCount} userId: ${info.user_id}`));
+    div.appendChild(document.createTextNode(`# of cards: ${info.handCount}`));
     return div;
   };
 
@@ -90,7 +93,7 @@ export const drawGameScreen = (state: PlayerGameState,) => {
 
   const name = document.createElement("div");
   name.className = "player-name";
-  name.innerText = currentPlayer.user_id.toString();
+  name.innerText = currentPlayer.userName.toString();
   userDiv.appendChild(name);
 
   currentPlayer.hand.forEach((card) => {
@@ -130,8 +133,13 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   bsBtn.className = "game-button";
   bsBtn.innerText = "Call BS";
   bsBtn.disabled = justPlayed;
-  
- 
+
+  if (!middlePile.length) {
+    bsBtn.disabled = true;
+  } else {
+    bsBtn.disabled = false;
+  }
+
 
    
   buttonContainer.append(playBtn, bsBtn);

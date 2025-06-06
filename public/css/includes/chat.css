@@ -32,3 +32,8 @@
 .message p {
     margin: 0;
 }
+
+
+#send-button {
+  margin-left: auto;
+}

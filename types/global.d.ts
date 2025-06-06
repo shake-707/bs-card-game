@@ -36,6 +36,7 @@ export type PlayerInfo = {
   isCurrent: boolean;
   hand: Card[];
   handCount: number;
+  userName: string;
 };
 
 export type OtherPlayerInfo = {
@@ -44,6 +45,7 @@ export type OtherPlayerInfo = {
   seat: number;
   handCount: number;
   isCurrent: boolean;
+  userName: string;
 };
 
 export type GameInfo = {

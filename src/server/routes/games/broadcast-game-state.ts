@@ -19,6 +19,7 @@ const createPlayerState = (
         seat: playerInfo.seat,
         handCount: playerInfo.hand.length,
         isCurrent: playerInfo.isCurrent,
+        userName: playerInfo.userName,
       };
       return acc;
     }, {} as Record<string, OtherPlayerInfo>);

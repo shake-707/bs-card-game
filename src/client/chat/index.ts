@@ -119,14 +119,22 @@ import { cloneTemplate, getGameId } from "../utils";
         // });
         const messageContainer = document.createElement("div");
         messageContainer.classList.add("message");
+        const usernameImageContainer = document.createElement("div");
+        const imageContainer = document.createElement("div");
+        const usernameContainer = document.createElement("div");
         const text = document.createElement("p");
         text.innerText = sender.user_name;
-        messageContainer.appendChild(text);
+        usernameContainer.appendChild(text);
+        //messageContainer.appendChild(text);
         const img = document.createElement("img");
         img.src = `http://gravatar.com/avatar/${sender.gravatar}?d=identicon`;
         img.alt = `Gravatar for ${sender.email}`;
         img.classList.add("avatar");
-        messageContainer.appendChild(img);
+        imageContainer.appendChild(img);
+        usernameImageContainer.appendChild(imageContainer);
+        usernameImageContainer.appendChild(usernameContainer);
+        messageContainer.appendChild(usernameImageContainer);
+        // messageContainer.appendChild(img);
 
         
 
