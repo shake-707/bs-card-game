@@ -131,6 +131,7 @@ main {
 
 /* Game listing */
 #game-listing {
+  max-width: 600px;
   list-style: none;
   padding: 0;
   margin: 1rem 0;
@@ -257,4 +258,87 @@ h2 {
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
+}
+
+#login-form h1,
+#register-form h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+#login-form div,
+#register-form div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+#login-form label,
+#register-form label {
+  flex: 0 0 120px;
+  text-align: left;
+  font-weight: bold;
+}
+
+#login-form input,
+#register-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-left: 10px;
+}
+
+#login-form button,
+#register-form button {
+  width: 25%;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#login-form button:hover,
+#register-form button:hover {
+  background-color: #e64a19;
+}
+
+#login-form a,
+#register-form a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+  text-align: center;
+  width: 100%;
+}
+
+#login-form a:hover,
+#register-form a:hover {
+  text-decoration: underline;
+}
+
+
+#login-container,
+#register-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+#login-container button,
+#register-container button {
+  margin: auto;
+}
+
+#welcome-message {
+  width: 60%;
+  margin: auto;
+  background-color: lightgrey;
+  border-radius: 7%;
 }

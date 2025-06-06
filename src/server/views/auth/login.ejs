@@ -9,8 +9,8 @@
     <%- include('../shared/menu', { user: null }) %>
 
     <main>
-      <div class="container">
-        <form action="/auth/login" method="post">
+      <div id="login-container" class="container">
+        <form id="login-form" action="/auth/login" method="post">
           <h1>Login</h1>
 
           <% if (locals.error && error) { %>
@@ -36,7 +36,7 @@
             <input type="password" name="password" id="password" placeholder="password" required  />
           </div>
 
-          <button type="submit">Login</button>
+          <div id="login-btn-wrapper"><button type="submit">Login</button></div>
 
           <p>
             <a href="/auth/register">Don't have an account? Register</a>

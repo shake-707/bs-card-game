@@ -139,19 +139,26 @@ export const drawGameScreen = (state: PlayerGameState,) => {
 
   // create game log
   const logDiv = document.createElement("div");
+  const titleDiv = document.createElement("div");
+  titleDiv.id = "title-div";
   const logTitle = document.createElement("h3");
   logTitle.innerHTML = 'Game Log';
-  logDiv.appendChild(logTitle);
+  titleDiv.appendChild(logTitle);
+  logDiv.appendChild(titleDiv);
+  const addLogs = document.createElement('div');
+  addLogs.id = "logs-container";
   logDiv.className = 'log-div';
   for (let i = 0; i < gameLog.length; i++) {
     const logP = document.createElement("p");
     logP.innerHTML = `Turn ${i + 1}: ` + gameLog[i]; 
-    logDiv.appendChild(logP);
+    addLogs.appendChild(logP);
     
   }
 
+  logDiv.appendChild(addLogs);
   container.appendChild(logDiv);
-  logDiv.scrollTop = logDiv.scrollHeight;
+  addLogs.scrollTop = addLogs.scrollHeight;
+  //logDiv.scrollTop = logDiv.scrollHeight;
 
   // // move the log screen
   // while (logDiv.children.length > 5) {

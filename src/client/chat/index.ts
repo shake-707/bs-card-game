@@ -25,17 +25,26 @@ import { cloneTemplate, getGameId } from "../utils";
             dbMessages.forEach((mess) => {
                 const messageContainer = document.createElement("div");
                 messageContainer.classList.add("message");
+                const usernameImageContainer = document.createElement("div");
+                const imageContainer = document.createElement("div");
+                const usernameContainer = document.createElement("div");
+
                 const text = document.createElement("p");
                 // @ts-ignore
                 text.innerText = mess.sender;
-                messageContainer.appendChild(text);
+                usernameContainer.appendChild(text);
                 const img = document.createElement("img");
                 // @ts-ignore
                 img.src = `http://gravatar.com/avatar/${mess.gravatar}?d=identicon`;
                 // @ts-ignore
                 img.alt = `Gravatar for ${mess.sender}`;
                 img.classList.add("avatar");
-                messageContainer.appendChild(img);
+                imageContainer.appendChild(img);
+                usernameImageContainer.appendChild(imageContainer);
+                usernameImageContainer.appendChild(usernameContainer);
+                messageContainer.appendChild(usernameImageContainer);
+                // messageContainer.appendChild(text);
+                // messageContainer.appendChild(img);
 
                 
 
