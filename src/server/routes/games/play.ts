@@ -8,6 +8,19 @@ export const play: RequestHandler = async (req, res, next) => {
   // @ts-ignore
   const userId: number = req.session.user.id;
   const { selectedCardIds } = req.body as { selectedCardIds: number[] };
+  console.log(selectedCardIds);
+
+  const cards = await db.any(
+  `SELECT *
+   FROM cards
+   WHERE id = ANY($(selectedCardIds))`,
+    { selectedCardIds }
+  );
+
+ 
+
+  console.log(cards); // cards is now an array of card objects
+
   try {
     const { current_value_index } = await db.one<{
       current_value_index: number;
@@ -39,14 +52,24 @@ export const play: RequestHandler = async (req, res, next) => {
       [gameId]
     );
 
+    // await db.none(
+    //   `UPDATE game_cards
+    //      SET owner_id = $(systemGuId)
+    //    WHERE game_id = $(gameId)
+    //      AND card_id = ANY($(selectedCardIds))
+    //      AND owner_id = $(guId)`,
+    //   { systemGuId, gameId, selectedCardIds, guId }
+    // );
     await db.none(
       `UPDATE game_cards
-         SET owner_id = $(systemGuId)
-       WHERE game_id = $(gameId)
-         AND card_id = ANY($(selectedCardIds))
-         AND owner_id = $(guId)`,
+      SET owner_id = $(systemGuId),
+          updated_at = NOW()
+      WHERE game_id = $(gameId)
+        AND card_id = ANY($(selectedCardIds))
+        AND owner_id = $(guId)`,
       { systemGuId, gameId, selectedCardIds, guId }
     );
+
 
     await db.none(
       `UPDATE game_users
@@ -57,51 +80,34 @@ export const play: RequestHandler = async (req, res, next) => {
 
     await db.none(
       `UPDATE games
-         SET current_value_index = (current_value_index + $(count)) % 13
+         SET current_value_index = (current_value_index + 1) % 13
        WHERE id = $(gameId)`,
-      { count: selectedCardIds.length, gameId }
+      {  gameId }
+    );
+
+    // update turn in game
+    await db.none(
+      `UPDATE games
+        SET current_turn = current_turn + 1
+        WHERE id = $(gameId)`,
+        { gameId }
+    );
+
+    const { current_turn } = await db.one<{ current_turn: number }>(
+      `SELECT current_turn FROM games WHERE id = $1`,
+      [gameId]
     );
 
     const { next_user_id } = await db.one<{ next_user_id: number }>(
-      `
-      WITH me AS (
-        SELECT turn_order
-        FROM game_users
-        WHERE game_id = $1 AND user_id = $2
-      ),
-      nxt AS (
-        SELECT user_id
-        FROM game_users
-        WHERE game_id = $1
-          AND user_id != 0
-          AND turn_order > (SELECT turn_order FROM me)
-        ORDER BY turn_order
-        LIMIT 1
-      ),
-      firstp AS (
-        SELECT user_id
-        FROM game_users
-        WHERE game_id = $1 AND user_id != 0
-        ORDER BY turn_order
-        LIMIT 1
-      )
-      SELECT coalesce((SELECT user_id FROM nxt),
-                      (SELECT user_id FROM firstp)
-                     ) AS next_user_id
-      `,
-      [gameId, userId]
+      `SELECT user_id AS next_user_id
+      FROM game_users
+      WHERE game_id = $1
+      AND turn_order = (($2 % 4) + 1)`,
+      [gameId, current_turn]
     );
 
-    await db.none(
-      `UPDATE games
-         SET current_turn = (
-           SELECT turn_order - 1
-           FROM game_users
-           WHERE game_id = $1 AND user_id = $2
-         )
-       WHERE id = $1`,
-      [gameId, next_user_id]
-    );
+
+    console.log(`gameId = ${gameId}, next user = ${next_user_id}`);
     await setCurrentPlayer(gameId, next_user_id);
 
     await broadcastGameState(gameId, req.app.get("io"));

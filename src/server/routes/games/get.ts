@@ -37,7 +37,7 @@ export const get = async (request: Request, response: Response) => {
       "SELECT COUNT(*) FROM game_users WHERE game_id = $1",
       [gameId]
     );
-    console.log('entered here');
+    //console.log('entered here');
     response.render("games", {
       gameId,
       isHost: hostId === userId,

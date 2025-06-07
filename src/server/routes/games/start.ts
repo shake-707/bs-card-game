@@ -7,8 +7,9 @@ export const start = async (request: Request, response: Response) => {
   const gameId = parseInt(paramGameId);
   //@ts-ignore
   const { id: userId } = request.session.user!;
-
+  // made it here
   const hostId = await Game.getHost(gameId);
+  // error on hostId
 
   // Only host can start the game
   if (hostId !== userId) {

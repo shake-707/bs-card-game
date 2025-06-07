@@ -9,7 +9,7 @@ const createPlayerState = (
 ) => {
   const otherPlayers: Record<string, OtherPlayerInfo> = Object.entries(game.players)
     .filter(([playerId]) => {
-      console.log('playerId is: ' + playerId + ', currentPlayer.id is' + currentPlayer.user_id);
+      //console.log('playerId is: ' + playerId + ', currentPlayer.id is' + currentPlayer.user_id);
       return parseInt(playerId) !== currentPlayer.user_id;
     })
     .reduce((acc, [playerId, playerInfo]) => {
@@ -23,7 +23,7 @@ const createPlayerState = (
       };
       return acc;
     }, {} as Record<string, OtherPlayerInfo>);
-    console.log('other players are', otherPlayers);
+    //console.log('other players are', otherPlayers);
   return {
     currentPlayer,
     otherPlayers,

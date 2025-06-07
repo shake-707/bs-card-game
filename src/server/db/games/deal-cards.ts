@@ -23,8 +23,8 @@ export const dealCards = async (
     SET owner_id = $(playerId)
     WHERE id IN (SELECT id FROM selected_cards)
   `;
-  console.log(gameId);
-  console.log(playerId);
-  console.log('here');
+  // console.log(gameId);
+  // console.log(playerId);
+  // console.log('here');
   await db.none(SQL, { gameId, playerId, count, systemGameUserId });
 };

@@ -7,5 +7,5 @@ WHERE game_id = $1
 ORDER BY created_at ASC`;
 
 export const getGameLogs = async (gameId : number) => {
-    return db.many(SQL, [gameId]); 
+    return db.any(SQL, [gameId]); 
 };

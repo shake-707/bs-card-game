@@ -62,7 +62,8 @@ export const checkWinner = async (req: Request, res: Response) => {
     if (cheated) {
       await db.none(
         `UPDATE game_cards
-        SET owner_id = $1
+        SET owner_id = $1,
+         updated_at = NOW()
         WHERE game_id = $2
           AND owner_id = (
             SELECT id FROM game_users WHERE game_id = $2 AND user_id = 0

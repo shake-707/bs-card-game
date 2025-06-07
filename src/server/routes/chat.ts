@@ -10,9 +10,9 @@ const router = express.Router();
 router.post('/:roomId', async (request: Request, response: Response) => {
     const { roomId } = request.params;
     const { message } = request.body;
-    console.log('enetered roomId: ' + roomId);
+    //console.log('enetered roomId: ' + roomId);
 
-    console.log('fine here');
+    //console.log('fine here');
     
     try{
     // @ts-ignore
@@ -23,8 +23,8 @@ router.post('/:roomId', async (request: Request, response: Response) => {
     const dbMessages = await getMessages(parseInt(roomId));
     
     const io = request.app.get("io");
-    console.log( "db Message: " ,dbMessages);
-    console.log( typeof dbMessages);
+    //console.log( "db Message: " ,dbMessages);
+    //console.log( typeof dbMessages);
     if (!io) {
         response.status(500).send("socket.io not initialized");
         return;

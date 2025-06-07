@@ -144,9 +144,10 @@ main {
 }
 
 #game-waiting-overlay {
+  display: flex;
   position: absolute;
-  width: 20vw;
-  top: -50px;
+  width: 300px;
+  top: -40px;
 }
 
 /* Top-left action buttons */
@@ -251,4 +252,16 @@ button.game-button:disabled {
 
 .blank {
   background-color: blue;
+}
+
+#host-waiting-overlay {
+  display: flex;
+  width: 100%;
+  gap: 5px;
+}
+
+
+#host-waiting-overlay button {
+  height: 30px;
+  margin: auto 0;
 }

@@ -16,10 +16,13 @@
       <div id="game-container" class="<%= started ? 'started' : '' %>">
         <div id="game-waiting-overlay">
           <% if (isHost && !started) { %>
-            <button id="start-game-button" class="shown">Start Game</button>
+            <div id="host-waiting-overlay">
+              <button id="start-game-button" class="shown">Start Game</button>
+              <p>Players in Game: <%= playerCount - 1 %> </p>
+            </div> 
           <% } else if (!started) { %>
-            <strong>Waiting for host...</strong>
-            <p>Players in Game: <%= playerCount - 1 %></p>
+            
+            <p><strong>Waiting for host...</strong> Players in Game: <%= playerCount - 1 %></p>
           <% } %>
         </div>
 

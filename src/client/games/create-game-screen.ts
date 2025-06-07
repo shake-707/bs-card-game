@@ -28,12 +28,12 @@ export const drawGameScreen = (state: PlayerGameState,) => {
 
  
   const oppArray = Object.values(otherPlayers) as OtherPlayerInfo[];
-  console.log('my seat: ', currentPlayer.seat);
+  //console.log('my seat: ', currentPlayer.seat);
    const justPlayed = oppArray.some((opp) => {
       if (opp.isCurrent) {
         console.log("current seat: ", opp.seat);
       }
-      return opp.isCurrent && opp.seat === currentPlayer.seat + 1;
+      return opp.isCurrent && opp.seat === (currentPlayer.seat % 4) + 1;
    });
 
    console.log(justPlayed);

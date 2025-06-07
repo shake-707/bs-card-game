@@ -7,6 +7,9 @@ export const callBs: RequestHandler = async (req, res, next) => {
   const gameId = Number(req.params.gameId);
   // @ts-ignore
   const challengerId: number = req.session.user.id;
+  // @ts-ignore
+  const userName = req.session.user.userName;
+  console.log(`user:  ${userName}`);
 
   try {
 // const { expected_value: claimedValue } = await db.one<{
@@ -32,6 +35,8 @@ export const callBs: RequestHandler = async (req, res, next) => {
         LIMIT 1`,
         [gameId]
       );
+
+      console.log(`Claimed value: ${claimedValue}, card count: ${numCards}`);
 
     await db.none(
       `INSERT INTO game_logs
@@ -67,9 +72,11 @@ export const callBs: RequestHandler = async (req, res, next) => {
        ORDER BY gc.updated_at DESC`,
        [gameId]
     );
-
+    console.log(checkPile);
+    console.log(`checkPile length: ${checkPile.length}`);
+    console.log(checkPile[0].value);
     // const cheated = pileCards.some((c) => c.value !== claimedValue);
-
+    console.log(checkPile.slice(0,numCards));
     const cheated = checkPile
       .slice(0, numCards)
       .some((c) => c.value !== claimedValue);
@@ -79,10 +86,10 @@ export const callBs: RequestHandler = async (req, res, next) => {
       ? (
           await db.one<{ user_id: number }>(
             `SELECT user_id
-               FROM game_users
-              WHERE game_id = $1 AND cards_placed_down > 0
-              ORDER BY cards_placed_down DESC
-              LIMIT 1`,
+               FROM game_logs
+              WHERE game_id = $1
+              ORDER BY created_at DESC
+              LIMIT 1 OFFSET 1`,
             [gameId]
           )
         ).user_id
@@ -95,7 +102,8 @@ export const callBs: RequestHandler = async (req, res, next) => {
 
     await db.none(
       `UPDATE game_cards
-         SET owner_id = $1
+         SET owner_id = $1,
+         updated_at = NOW()
        WHERE game_id = $2
          AND owner_id = (
            SELECT id FROM game_users WHERE game_id = $2 AND user_id = 0
@@ -127,23 +135,27 @@ export const callBs: RequestHandler = async (req, res, next) => {
       ]
     );
 
-    await db.none(
-      `UPDATE games
-         SET current_value_index = (current_value_index + 1) % 13
-       WHERE id = $1`,
-      [gameId]
-    );
 
-    await db.none(
-      `UPDATE games
-         SET current_turn = (
-           SELECT turn_order - 1
-           FROM game_users
-           WHERE game_id = $1 AND user_id = $2
-         )
-       WHERE id = $1`,
-      [gameId, loserUserId]
-    );
+    //value shouldnt change on bs call
+    // await db.none(
+    //   `UPDATE games
+    //      SET current_value_index = (current_value_index + 1) % 13
+    //    WHERE id = $1`,
+    //   [gameId]
+    // );
+
+    // turn should revert on bs call
+
+    // await db.none(
+    //   `UPDATE games
+    //      SET current_turn = (
+    //        SELECT turn_order - 1
+    //        FROM game_users
+    //        WHERE game_id = $1 AND user_id = $2
+    //      )
+    //    WHERE id = $1`,
+    //   [gameId, loserUserId]
+    // );
 
     await broadcastGameState(gameId, req.app.get("io"));
     res.sendStatus(200);
