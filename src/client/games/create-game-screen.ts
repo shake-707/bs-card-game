@@ -168,19 +168,7 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   logDiv.appendChild(addLogs);
   container.appendChild(logDiv);
   addLogs.scrollTop = addLogs.scrollHeight;
-  //logDiv.scrollTop = logDiv.scrollHeight;
 
-  // // move the log screen
-  // while (logDiv.children.length > 5) {
-    
-  //   const oldestLog = document.querySelector(".log-div p");
-    
-  
-  //   // removing the oldest log from div container
-  //   logDiv.removeChild(oldestLog!);
-  //   //logDiv.removeChild(logDiv.firstElementChild!);
-  //   //logDiv.removeChild(document.querySelector(".log-div :nth-child(2)")!);
-  // }
 
   console.log('my handcount: ',currentPlayer.handCount );
   if (currentPlayer.handCount === 0) {

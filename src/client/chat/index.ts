@@ -84,39 +84,6 @@ import { cloneTemplate, getGameId } from "../utils";
     socket?.on(`chat:message:${getGameId()}`, ({ message, sender, timestamp }: ChatMessage) => {
        
         
-        // dbMessages.forEach((mess) => {
-        //     const messageContainer = document.createElement("div");
-        //     messageContainer.classList.add("message");
-        //     const text = document.createElement("p");
-        //     // @ts-ignore
-        //     text.innerText = mess.sender;
-        //     messageContainer.appendChild(text);
-        //     const img = document.createElement("img");
-        //     // @ts-ignore
-        //     img.src = `http://gravatar.com/avatar/${mess.gravatar}?d=identicon`;
-        //     // @ts-ignore
-        //     img.alt = `Gravatar for ${mess.sender}`;
-        //     img.classList.add("avatar");
-        //     messageContainer.appendChild(img);
-
-            
-
-        //     const messageContent = document.createElement("span");
-        //     messageContent.classList.add("message-content");
-        //     // @ts-ignore
-        //     messageContent.innerText = mess.message;
-
-        //     const messageTimeStamp = document.createElement("span");
-        //     messageTimeStamp.classList.add("message-timestamp");
-        //     // @ts-ignore
-        //     messageTimeStamp.innerText = new Date(mess.timestamp).toLocaleTimeString();
-
-        //     messageContainer.appendChild(messageContent);
-        //     messageContainer.appendChild(messageTimeStamp);
-
-        //     chatContainer?.appendChild(messageContainer);
-
-        // });
         const messageContainer = document.createElement("div");
         messageContainer.classList.add("message");
         const usernameImageContainer = document.createElement("div");
