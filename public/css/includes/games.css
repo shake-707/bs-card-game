@@ -233,6 +233,7 @@ button.game-button:disabled {
   border-radius: 10px;
   background-color: gray;
   padding: 10px;
+  width: 225px;
 }
 
 .log-div p,

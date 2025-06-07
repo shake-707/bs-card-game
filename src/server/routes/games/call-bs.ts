@@ -9,17 +9,29 @@ export const callBs: RequestHandler = async (req, res, next) => {
   const challengerId: number = req.session.user.id;
 
   try {
-const { expected_value: claimedValue } = await db.one<{
-  expected_value: number;
-}>(
-  `SELECT expected_value
-     FROM game_logs
-    WHERE game_id = $1
-      AND action ILIKE 'played %'
-    ORDER BY created_at DESC
-    LIMIT 1`,
-  [gameId]
-);
+// const { expected_value: claimedValue } = await db.one<{
+//   expected_value: number;
+// }>(
+//   `SELECT expected_value
+//      FROM game_logs
+//     WHERE game_id = $1
+//       AND action ILIKE 'played %'
+//     ORDER BY created_at DESC
+//     LIMIT 1`,
+//   [gameId]
+// );
+  const { expected_value: claimedValue, cards_count: numCards} = await db.one<{
+        expected_value: number;
+        cards_count: number;
+      }>(
+        `SELECT expected_value, cards_count
+        FROM game_logs
+        WHERE game_id = $1
+        AND action ILIKE 'played %'
+        ORDER BY created_at DESC
+        LIMIT 1`,
+        [gameId]
+      );
 
     await db.none(
       `INSERT INTO game_logs
@@ -35,18 +47,33 @@ const { expected_value: claimedValue } = await db.one<{
       ]
     );
 
-    const pileCards: { card_id: number; value: number }[] = await db.any(
-      `SELECT gc.card_id, c.value
-         FROM game_cards gc
-         JOIN cards c   ON c.id = gc.card_id
-        WHERE gc.game_id = $1
-          AND gc.owner_id = (
-            SELECT id FROM game_users WHERE game_id = $1 AND user_id = 0
-          )`,
-      [gameId]
+    // const pileCards: { card_id: number; value: number }[] = await db.any(
+    //   `SELECT gc.card_id, c.value
+    //      FROM game_cards gc
+    //      JOIN cards c   ON c.id = gc.card_id
+    //     WHERE gc.game_id = $1
+    //       AND gc.owner_id = (
+    //         SELECT id FROM game_users WHERE game_id = $1 AND user_id = 0
+    //       )`,
+    //   [gameId]
+    // );
+
+    const checkPile: {cardId: number; value: number}[] = await db.any(
+      `SELECT gc.card_id AS "cardId", c.value
+       FROM game_cards gc
+       JOIN cards c ON c.id = gc.card_id
+       WHERE gc.game_id = $1
+       AND gc.owner_id = (SELECT id FROM game_users WHERE game_id = $1 AND user_id = 0)
+       ORDER BY gc.updated_at DESC`,
+       [gameId]
     );
 
-    const cheated = pileCards.some((c) => c.value !== claimedValue);
+    // const cheated = pileCards.some((c) => c.value !== claimedValue);
+
+    const cheated = checkPile
+      .slice(0, numCards)
+      .some((c) => c.value !== claimedValue);
+
 
     const loserUserId = cheated
       ? (
@@ -85,7 +112,7 @@ const { expected_value: claimedValue } = await db.one<{
 
     //await setCurrentPlayer(gameId, loserUserId);
 
-    const pileCount = pileCards.length;
+    const pileCount = checkPile.length;
     await db.none(
       `INSERT INTO game_logs (game_id, user_id, action, cards_count, expected_value)
          VALUES ($1, $2, $3, $4, $5)`,

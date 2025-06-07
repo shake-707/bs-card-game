@@ -2,6 +2,7 @@ import { Card, PlayerGameState, OtherPlayerInfo, GameState } from "global";
 import { createCard } from "./create-card";
 import elements from "../elements";
 import { getGameId } from "../utils";
+import { post } from "./fetch-wrapper";
 
 export const drawGameScreen = (state: PlayerGameState,) => {
   const { currentPlayer, otherPlayers, middlePile, gameLog } = state;
@@ -27,11 +28,17 @@ export const drawGameScreen = (state: PlayerGameState,) => {
 
  
   const oppArray = Object.values(otherPlayers) as OtherPlayerInfo[];
-
+  console.log('my seat: ', currentPlayer.seat);
    const justPlayed = oppArray.some((opp) => {
+      if (opp.isCurrent) {
+        console.log("current seat: ", opp.seat);
+      }
       return opp.isCurrent && opp.seat === currentPlayer.seat + 1;
    });
-  
+
+   console.log(justPlayed);
+   
+
 
   const makeOppDiv = (
     posClass: "side-opponent left" | "side-opponent right" | "top-opponent",
@@ -132,13 +139,8 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   bsBtn.id = "bs-button";
   bsBtn.className = "game-button";
   bsBtn.innerText = "Call BS";
-  bsBtn.disabled = justPlayed;
-
-  if (!middlePile.length) {
-    bsBtn.disabled = true;
-  } else {
-    bsBtn.disabled = false;
-  }
+  bsBtn.disabled = !middlePile.length || justPlayed;
+  
 
 
    
@@ -180,22 +182,28 @@ export const drawGameScreen = (state: PlayerGameState,) => {
   //   //logDiv.removeChild(document.querySelector(".log-div :nth-child(2)")!);
   // }
 
-
-
-
-  // === Check for game winner via backend ===
-  console.log('currentplayer: id ' + currentPlayer.id);
-  fetch(`/games/${getGameId()}/check-winner`)
+  console.log('my handcount: ',currentPlayer.handCount );
+  if (currentPlayer.handCount === 0) {
+    fetch(`/games/${getGameId()}/check-winner`)
     .then((res) => res.json())
     .then((data) => {
       if (data.winner) {
         alert(`Player ${data.winner} has won the game!`);
         window.location.href = "/lobby"; // or your actual lobby path
+      } else {
+        fetch(`/games/${getGameId()}/ping`, {
+          method: "POST",
+        });
       }
     })
     .catch((err) => {
       console.error("Failed to check winner:", err);
     });
+  }
+
+  // === Check for game winner via backend ===
+  console.log('currentplayer: id ' + currentPlayer.id);
+  
 
     
 

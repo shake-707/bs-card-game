@@ -29,7 +29,7 @@ export const configurePlayAndBsButtons = () => {
     bsBtn.addEventListener("click", (e) => {
       e.preventDefault();
       if (confirm("Call BS on the previous play?")) {
-        post(`/games/${getGameId()}/bs`, {});
+      post(`/games/${getGameId()}/bs`  , {});
       }
     });
   }
