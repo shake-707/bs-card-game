@@ -84,8 +84,7 @@ export const drawGameScreen = (state: PlayerGameState,) => {
     card.style.transform = `rotate(${i * 4}deg)`;
   });
 
-  console.log('length of middle pile ', middlePile.length);
-  // pileDiv.appendChild(document.createTextNode(`  (${middlePile.length} in pile)`));
+  //console.log('length of middle pile ', middlePile.length);
   const pileCountDiv = document.createElement("div");
   pileCountDiv.className = "pile-count";
   pileCountDiv.innerText = `(${middlePile.length} in pile)`;
@@ -177,7 +176,7 @@ export const drawGameScreen = (state: PlayerGameState,) => {
     .then((data) => {
       if (data.winner) {
         alert(`Player ${data.winner} has won the game!`);
-        window.location.href = "/lobby"; // or your actual lobby path
+        window.location.href = "/lobby";
       } else {
         fetch(`/games/${getGameId()}/ping`, {
           method: "POST",
